@@ -3,8 +3,15 @@ package com.dev.scaffdone.scaffold.entity;
 
 public enum Size {
 
-    A(0.73f),C(1.09f),D(1.57f),E(2.07f),F(2.57f),G(3.07f),ONEFRAME(0.05f),TWOFRAMES(0.10f);
 
+    SIZE_073(0.73f), SIZE_109(1.09f), SIZE_157(1.57f), SIZE_207(2.07f), SIZE_257(2.57f), SIZE_307(3.07f), ONE_FRAME_005(0.05f), TWO_FRAMES_010(0.10f);
+
+    private final float size;
     Size(float size) {
+        this.size = size;
     }
+    public float getSize() {
+        return size;
+    }
+
 }
