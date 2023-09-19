@@ -1,8 +1,10 @@
 package com.dev.scaffdone.scaffold;
 
+import com.dev.scaffdone.scaffold.entity.CalculateModule;
 import com.dev.scaffdone.scaffold.entity.ScaffoldData;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -18,19 +20,20 @@ public class ScaffoldService {
 
 
     public ScaffoldData add(ScaffoldData scaffold) {
+        float length = calculateLength(scaffold.getModules());
 
         return ScaffoldData.builder()
                 .id(scaffold.getId())
                 .height(scaffold.getHeight())
-                .sizes(scaffold.getSizes())
+                .modules(scaffold.getModules())
                 .username(scaffold.getUsername())
                 .settled(scaffold.isSettled())
                 .height(scaffold.getHeight())
                 .frameSize(scaffold.getFrameSize())
-                .totalLength(calculateLength(scaffold.getSizes()))
+                .totalLength(length)
                 .resultSquareMeters(
                         calculateSquareMeters(
-                                calculateLength(scaffold.getSizes()),
+                                length,
                                 scaffold.getHeight()
                         )
 
@@ -44,10 +47,8 @@ public class ScaffoldService {
         return totalLength * height;
     }
 
-    private float calculateLength(List<Float> sizes) {
-        return sizes
-                .stream()
-                .reduce(0f, Float::sum);
+    public static float calculateLength(List<CalculateModule> sizes) {
+        return sizes.stream().map(e-> e.getSize()*e.getQuantity()).reduce(0f,Float::sum);
 
     }
 

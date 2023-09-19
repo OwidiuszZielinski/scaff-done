@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.List;
 
@@ -20,7 +22,9 @@ public class ScaffoldData {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
-    private List<Float> sizes;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(columnDefinition="JSON")
+    private List<CalculateModule> modules;
     private boolean settled;
     private float height;
     private Size frameSize;
