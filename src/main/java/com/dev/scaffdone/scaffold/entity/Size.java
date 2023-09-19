@@ -1,6 +1,9 @@
 package com.dev.scaffdone.scaffold.entity;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Size {
 
 
@@ -12,6 +15,9 @@ public enum Size {
     }
     public float getSize() {
         return size;
+    }
+    public static List<Size> getSizes(){
+        return Arrays.asList(Size.values());
     }
 
 }

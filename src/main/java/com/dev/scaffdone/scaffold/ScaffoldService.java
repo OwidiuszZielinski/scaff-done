@@ -19,7 +19,9 @@ public class ScaffoldService {
 
     public ScaffoldData add(ScaffoldData scaffold) {
 
-        return ScaffoldData.builder().height(scaffold.getHeight())
+        return ScaffoldData.builder()
+                .id(scaffold.getId())
+                .height(scaffold.getHeight())
                 .sizes(scaffold.getSizes())
                 .username(scaffold.getUsername())
                 .settled(scaffold.isSettled())

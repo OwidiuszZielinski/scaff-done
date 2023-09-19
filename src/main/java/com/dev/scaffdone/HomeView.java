@@ -4,14 +4,18 @@ import com.dev.scaffdone.scaffold.ScaffoldService;
 import com.dev.scaffdone.scaffold.entity.ScaffoldData;
 import com.dev.scaffdone.scaffold.entity.Size;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Route("")
@@ -24,20 +28,53 @@ public class HomeView extends VerticalLayout {
                 .settled(true)
                 .username("Owi").height(10.0f).build();
 
+
+
+
+
+
         grid.setItems(
             service.add(owi)
         );
 
         add(
                 new H1("Scaff-Done"),
-                grid
+                grid,
+                userHandler(),
+                sizesBox()
         );
 
     }
 
+    private static HorizontalLayout userHandler(){
+        TextField user = new TextField("User");
+        ComboBox<String> comboBox = new ComboBox<>("Last Users");
+        List<String> items = new ArrayList<>();
+        //Dopisac uzytkownikow ktorzy istnieja w bazie danych
+        items.add("");
+        items.add("My Data");
+        comboBox.setAllowCustomValue(true);
+            comboBox.setItems(items);
+
+        return new HorizontalLayout(user,comboBox);
+    }
+
+    private static HorizontalLayout sizesBox(){
+        ComboBox<String> comboBox = new ComboBox<>("Sizes");
+        List<Size> items = Size.getSizes();
+        comboBox.setAllowCustomValue(true);
+        comboBox.setItems(items
+                .stream()
+                .map(String::valueOf)
+                .toList());
+
+        return new HorizontalLayout(comboBox);
+    }
+
+
     private static Grid<ScaffoldData> createGrid() {
         Grid<ScaffoldData> grid = new Grid<>(ScaffoldData.class, false);
-        grid.addColumn(ScaffoldData::getId).setHeader("ID");
+        grid.addColumn(ScaffoldData::getId).setHeader("Id");
         grid.addColumn(ScaffoldData::getUsername).setHeader("User");
         grid.addColumn(ScaffoldData::getSizes).setHeader("Sizes");
         grid.addColumn(ScaffoldData::getFrameSize).setHeader("Frames");
@@ -66,7 +103,7 @@ public class HomeView extends VerticalLayout {
             delete.getStyle().set("background-color", "red");
             delete.getStyle().set("color", "white");
             delete.addClickListener(e -> {
-                // Perform delete operation
+                //Dodaj potwierdzenie TAK/NIE USUN Z BAZY
                 Notification.show("Deleted!");
             });
             return delete;
