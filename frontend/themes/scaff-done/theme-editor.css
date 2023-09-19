@@ -1,0 +1,16 @@
+/*
+ * This file has been created by the Vaadin Theme Editor. Please note that
+ * manual changes to individual CSS properties may be overwritten by the theme editor.
+ */
+h1.home-view-h1-1 {
+ font-family: 'Sucrose-BoldTwo';
+ src: url('src/resources/static/fonts/Sucrose-BoldTwo.ttf');
+
+}
+
+vaadin-button.home-view-button-1 { background-color:rgba(29,62,105,0.05); }
+
+vaadin-vertical-layout.home-view-vertical-layout-1 {
+
+
+}

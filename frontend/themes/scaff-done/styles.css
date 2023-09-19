@@ -1,0 +1,5 @@
+@import "theme-editor.css";
+html {
+  --lumo-primary-color: green;
+
+}
