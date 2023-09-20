@@ -1,21 +1,25 @@
 package com.dev.scaffdone;
 
+import com.dev.scaffdone.scaffold.DialogView;
 import com.dev.scaffdone.scaffold.ScaffoldService;
 import com.dev.scaffdone.scaffold.entity.CalculateModule;
-import com.dev.scaffdone.scaffold.entity.ScaffoldData;
+import com.dev.scaffdone.scaffold.entity.Scaffold;
 import com.dev.scaffdone.scaffold.entity.Size;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
@@ -34,10 +38,12 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
     public HomeView(ScaffoldService service) {
 
-        Grid<ScaffoldData> grid = createGrid();
-        ScaffoldData owi = ScaffoldData.builder().id(1L).modules(List.of(new CalculateModule(Size.SIZE_073.getSize(),5)))
+        Grid<Scaffold> grid = createGrid();
+        final Scaffold owi = Scaffold.builder().id(1L).modules(List.of(new CalculateModule(Size.SIZE_073.getSize(),5)))
                 .settled(true)
+                .additionalInfo("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
                 .username("Owi").height(10.0f).build();
+
 
 
         grid.setItems(
@@ -66,14 +72,14 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
     }
 
-    private static Grid<ScaffoldData> createGrid() {
-        Grid<ScaffoldData> grid = new Grid<>(ScaffoldData.class, false);
-        grid.addColumn(ScaffoldData::getId).setHeader("Id");
-        grid.addColumn(ScaffoldData::getUsername).setHeader("User");
-        grid.addColumn(ScaffoldData::getModules).setHeader("Modules");
-        grid.addColumn(ScaffoldData::getFrameSize).setHeader("Frames");
-        grid.addColumn(ScaffoldData::getHeight).setHeader("Height");
-        grid.addColumn(ScaffoldData::getTotalLength).setHeader("Total Length");
+    private static Grid<Scaffold> createGrid() {
+        Grid<Scaffold> grid = new Grid<>(Scaffold.class, false);
+        grid.addColumn(Scaffold::getId).setHeader("Id");
+        grid.addColumn(Scaffold::getUsername).setHeader("User");
+        grid.addColumn(Scaffold::getModules).setHeader("Modules");
+        grid.addColumn(Scaffold::getFrameSize).setHeader("Frames");
+        grid.addColumn(Scaffold::getHeight).setHeader("Height");
+        grid.addColumn(Scaffold::getTotalLength).setHeader("Total Length");
 
         grid.addComponentColumn(item -> {
             Button button = new Button();
@@ -91,7 +97,40 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
             return button;
 
         }).setHeader("Settled");
-        grid.addColumn(ScaffoldData::getResultSquareMeters).setHeader("Square Meters");
+        grid.addColumn(Scaffold::getResultSquareMeters).setHeader("Square Meters");
+
+        grid.addComponentColumn(item -> {
+            Button button = new Button("MORE");
+
+            button.getStyle().set("background-color", "green");
+            button.getStyle().set("color", "white");
+
+            button.addClickListener(click -> {
+                Dialog dialog = new Dialog();
+                TextArea dialogTextArea = new TextArea("Data:");
+                dialogTextArea.setReadOnly(true);
+                VerticalLayout dialogLayout = new VerticalLayout();
+
+                dialogTextArea.setValue(item.getAdditionalInfo());
+                dialog.setHeaderTitle("Additional Information");
+                dialog.setWidth("600px");
+                dialog.setHeight("400px");
+
+                dialogLayout.add(dialogTextArea);
+                dialogLayout.setAlignItems(Alignment.STRETCH);
+                dialog.add(dialogLayout);
+
+                Button close = new Button("Close", e -> {
+                    dialog.close();
+                });
+                dialog.getFooter().add(close);
+                dialog.open();
+            });
+            return button;
+
+        }).setHeader("Additional Info");
+
+
         grid.addComponentColumn(item -> {
             Button delete = new Button(VaadinIcon.TRASH.create());
             //<theme-editor-local-classname>
