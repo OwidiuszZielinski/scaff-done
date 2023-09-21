@@ -2,15 +2,64 @@
  * This file has been created by the Vaadin Theme Editor. Please note that
  * manual changes to individual CSS properties may be overwritten by the theme editor.
  */
-h1.home-view-h1-1 {
- font-family: 'Sucrose-BoldTwo';
- src: url('src/resources/static/fonts/Sucrose-BoldTwo.ttf');
+@keyframes pulse {
+  0% {
+    transform:scale(1);
+    opacity:0.7;
+  }
+  100% {
+    transform:scale(1.03);
+    opacity:1;
+  }
+}
 
+h1.home-view-h1-1 {
+  -webkit-text-stroke:1px #34495e;
+  animation:pulse 1.5s infinite alternate;
+  color:#2C3E50;
+  font-family:'Poppins',sans-serif;
+  font-size:2.5em;
+  font-weight:600;
+  letter-spacing:-1px;
+  margin-bottom:20px;
+  position:relative;
+  text-shadow:3px 3px 10px rgba(0,0,0,0.2);
+  text-stroke:1px #34495e;
+  text-transform:uppercase;
+}
+
+h1.home-view-h1-1::before {
+  bottom:0;
+  color:#7ed6df;
+  content:attr(data-text);
+  left:0;
+  opacity:0.9;
+  pointer-events:none;
+  position:absolute;
+  right:0;
+  text-shadow:0 0 15px #7ed6df,0 0 20px #7ed6df,0 0 25px #7ed6df,0 0 30px #7ed6df;
+  top:0;
+  z-index:-1;
 }
 
 vaadin-button.home-view-button-1 { background-color:rgba(29,62,105,0.05); }
 
-vaadin-vertical-layout.home-view-vertical-layout-1 {
+vaadin-combo-box.home-view-combo-box-1::part(input-field) { background-color:rgba(102,143,94,0.32); }
 
+vaadin-text-field.home-view-text-field-1::part(input-field) { background-color:rgba(102,143,94,0.32); }
 
+vaadin-vertical-layout.home-view-h1-1 { background-color:rgba(166,190,255,0.23); }
+
+vaadin-vertical-layout.home-view-vertical-layout-1 {}
+
+vaadin-grid::part(cell){
+background-color:rgba(166,190,255,0.23);
 }
+
+
+vaadin-radio-group > label{
+color:rgba(27, 43, 65, 0.69)
+}
+
+
+
