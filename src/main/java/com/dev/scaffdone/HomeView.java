@@ -12,10 +12,12 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
@@ -33,7 +35,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
     public HomeView(ScaffoldService service) {
 
-        addClassName("home-view-h1-1");
+        //addClassName("home-view-h1-1");
         HomeGrid grid = new HomeGrid();
 
         final Scaffold owi = Scaffold.builder().id(1L).modules(List.of(new CalculateModule(Size.SIZE_073.getSize(), 5)))
@@ -41,9 +43,14 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
                 .additionalInfo("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
                 .username("Owi").height(10.0f).build();
 
+        final Scaffold owi2 = Scaffold.builder().id(1L).modules(List.of(new CalculateModule(Size.SIZE_073.getSize(), 5)))
+                .settled(true)
+                .additionalInfo("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
+                .username("Owi").height(10.0f).build();
 
         grid.setItems(
-                service.add(owi)
+                service.add(owi),
+                service.add(owi2)
         );
         H1 header = new H1("Scaffold Done");
         //<theme-editor-local-classname>
@@ -64,10 +71,35 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
                         sizesBox(),
                         framesBoxes(),
                         height()),
+                    additionalInfo(),
                     calculation()
+
         );
     }
 
+
+    private static VerticalLayout additionalInfo(){
+        VerticalLayout horizontalLayout = new VerticalLayout();
+        TextArea info = new TextArea("Additional Info");
+        info.setWidth("400px");
+        info.setHeight("200px");
+        info.addClassName("home-view-text-field-1");
+        Button add = new Button(VaadinIcon.PLUS.create());
+        add.setWidth("200px");
+        add.getStyle().set("background-color", "#4e8752");
+        add.getStyle().set("color", "white");
+        add.addClickListener(e -> {
+            //Dodaj zapisywanie do listy obiektu ilosc x modul
+            Notification.show("Added!");
+        });
+        horizontalLayout.setWidth("100%");
+        horizontalLayout.setJustifyContentMode(JustifyContentMode.START);  // Space out components, pushing the button to the far right
+        horizontalLayout.add(info,add);
+        return horizontalLayout;
+
+
+
+    }
 
     private static VerticalLayout userHandler() {
         TextField user = new TextField("Custom User");

@@ -48,12 +48,36 @@ vaadin-combo-box.home-view-combo-box-1::part(input-field) { background-color:rgb
 
 vaadin-text-field.home-view-text-field-1::part(input-field) { background-color:rgba(102,143,94,0.32); }
 
-vaadin-vertical-layout.home-view-h1-1 { background-color:rgba(166,190,255,0.23); }
+vaadin-vertical-layout.home-view-h1-1 {
 
-vaadin-vertical-layout.home-view-vertical-layout-1 {}
+
+/*background * vaadin-vertical-layout.home-view-h1-1 {
+               background-image: url("background.jpg");
+               }*/
+}
+vaadin-grid::part(header-cell){
+background-color:#4e8752;
+color: white;
+}
+
+
+vaadin-vertical-layout.home-view-vertical-layout-1 {
+
+}
+
+vaadin-grid{
+ border-radius: 10px; /* Adjust the value to your liking */
+    overflow: hidden; /* To make sure the inner parts respect the rounded corners */
+    border: 2px solid black;
+}
+
+vaadin-grid::part(header-cell){
+
+
+}
 
 vaadin-grid::part(cell){
-background-color:rgba(166,190,255,0.23);
+
 }
 
 
