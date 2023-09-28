@@ -23,7 +23,7 @@ public class Scaffold {
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "JSON")
     private List<CalculateModule> modules;
-    private boolean settled;
+    private boolean done;
     private float height;
     private Size frameSize;
     private String username;

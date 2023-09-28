@@ -1,7 +1,7 @@
 package com.dev.scaffdone;
 
 
-import com.dev.scaffdone.components.HomeGrid;
+import com.dev.scaffdone.components.ScaffoldGrid;
 import com.dev.scaffdone.scaffold.ScaffoldService;
 import com.dev.scaffdone.scaffold.entity.CalculateModule;
 import com.dev.scaffdone.scaffold.entity.Scaffold;
@@ -12,7 +12,6 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.AppShellConfigurator;
@@ -36,15 +35,15 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
     public HomeView(ScaffoldService service) {
 
         //addClassName("home-view-h1-1");
-        HomeGrid grid = new HomeGrid();
+        ScaffoldGrid grid = new ScaffoldGrid();
 
         final Scaffold owi = Scaffold.builder().id(1L).modules(List.of(new CalculateModule(Size.SIZE_073.getSize(), 5)))
-                .settled(true)
+                .done(true)
                 .additionalInfo("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
                 .username("Owi").height(10.0f).build();
 
         final Scaffold owi2 = Scaffold.builder().id(1L).modules(List.of(new CalculateModule(Size.SIZE_073.getSize(), 5)))
-                .settled(true)
+                .done(true)
                 .additionalInfo("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
                 .username("Owi").height(10.0f).build();
 
@@ -164,7 +163,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
         CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
         checkboxGroup.setLabel("Frame Size");
-        checkboxGroup.setItems("One frame length - 5 [cm]", "Two frame length - 10 [cm]");
+        checkboxGroup.setItems("One frame length - 5 [cm]", "Two frames length - 10 [cm]","Three frames length - 15 [cm]","Four frames length - 20 [cm] ");
 
         Button setFrames = new Button("SET FRAMES");
         setFrames.setWidth("190px");
@@ -181,7 +180,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
         RadioButtonGroup<Integer> radioButtonGroup = new RadioButtonGroup<>();
         radioButtonGroup.setLabel("Height");
         radioButtonGroup.setItems(
-                IntStream.rangeClosed(2, 22)
+                IntStream.rangeClosed(2, 36)
                         .filter(n -> n % 2 == 0)
                         .boxed()
                         .collect(Collectors.toList())
@@ -191,11 +190,23 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
             //  currentCalculation = radioButtonGroup.getValue();
 
         });
-
         TextField customHeight = new TextField("Custom Height");
+        Button setHeightButton = new Button("SET HEIGHT");
+
+
+        setHeightButton.setWidth("190px");
+        setHeightButton.getStyle().set("background-color", "#4e8752");
+        setHeightButton.getStyle().set("margin-top", "37px");
+        setHeightButton.getStyle().set("color", "white");
+        setHeightButton.addClickListener(e -> {
+            //Dodaj zapisywanie do listy obiektu ilosc x modul
+            Notification.show("Height Set!");
+        });
+        HorizontalLayout horizontalLayout = new HorizontalLayout(customHeight,setHeightButton);
+
         //<theme-editor-local-classname>
         customHeight.addClassName("home-view-text-field-1");
-        return new VerticalLayout(radioButtonGroup, customHeight);
+        return new VerticalLayout(radioButtonGroup, horizontalLayout);
     }
 
     private static HorizontalLayout calculation() {

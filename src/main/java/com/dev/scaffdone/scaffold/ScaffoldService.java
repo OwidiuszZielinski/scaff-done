@@ -26,7 +26,7 @@ public class ScaffoldService {
                 .height(scaffold.getHeight())
                 .modules(scaffold.getModules())
                 .username(scaffold.getUsername())
-                .settled(scaffold.isSettled())
+                .done(scaffold.isDone())
                 .height(scaffold.getHeight())
                 .frameSize(scaffold.getFrameSize())
                 .totalLength(length)
