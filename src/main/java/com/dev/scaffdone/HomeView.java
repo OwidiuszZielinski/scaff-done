@@ -1,14 +1,15 @@
 package com.dev.scaffdone;
 
 
+import com.dev.scaffdone.components.DimensionQuantityManager;
 import com.dev.scaffdone.components.ScaffoldGrid;
+import com.dev.scaffdone.components.UserSelectionManager;
 import com.dev.scaffdone.scaffold.ScaffoldService;
-import com.dev.scaffdone.scaffold.entity.CalculateModule;
+import com.dev.scaffdone.scaffold.entity.ScaffoldModule;
 import com.dev.scaffdone.scaffold.entity.Scaffold;
-import com.dev.scaffdone.scaffold.entity.Size;
+import com.dev.scaffdone.scaffold.entity.Dimension;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -22,7 +23,6 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -33,16 +33,31 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
 
     public HomeView(ScaffoldService service) {
-
-        //addClassName("home-view-h1-1");
         ScaffoldGrid grid = new ScaffoldGrid();
+        initExampleData(service, grid);
+        H1 header = new H1("Scaffold Done");
+        header.addClassName("home-view-h1-1");
+        VerticalLayout title = new VerticalLayout(header);
+        add(
+                title,
+                grid,
+                new HorizontalLayout(new UserSelectionManager(),
+                        new DimensionQuantityManager(),
+                        framesBoxes(),
+                        height()),
+                    additionalInfo(),
+                    calculation()
 
-        final Scaffold owi = Scaffold.builder().id(1L).modules(List.of(new CalculateModule(Size.SIZE_073.getSize(), 5)))
+        );
+    }
+
+    private static void initExampleData(ScaffoldService service, ScaffoldGrid grid) {
+        final Scaffold owi = Scaffold.builder().id(1L).modules(List.of(new ScaffoldModule(Dimension.SIZE_073.getSize(), 5)))
                 .done(true)
                 .additionalInfo("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
                 .username("Owi").height(10.0f).build();
 
-        final Scaffold owi2 = Scaffold.builder().id(1L).modules(List.of(new CalculateModule(Size.SIZE_073.getSize(), 5)))
+        final Scaffold owi2 = Scaffold.builder().id(1L).modules(List.of(new ScaffoldModule(Dimension.SIZE_073.getSize(), 5)))
                 .done(true)
                 .additionalInfo("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
                 .username("Owi").height(10.0f).build();
@@ -50,29 +65,6 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
         grid.setItems(
                 service.add(owi),
                 service.add(owi2)
-        );
-        H1 header = new H1("Scaffold Done");
-        //<theme-editor-local-classname>
-        header.addClassName("home-view-h1-1");
-
-        header.addClassName("home-view-h1-1");
-
-        VerticalLayout title = new VerticalLayout(header);
-
-        title.addClassName("home-view-vertical-layout-1");
-       
-
-
-        add(
-                title,
-                grid,
-                new HorizontalLayout(userHandler(),
-                        sizesBox(),
-                        framesBoxes(),
-                        height()),
-                    additionalInfo(),
-                    calculation()
-
         );
     }
 
@@ -100,64 +92,9 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
     }
 
-    private static VerticalLayout userHandler() {
-        TextField user = new TextField("Custom User");
-        user.addClassName("home-view-text-field-1");
-        ComboBox<String> comboBox = new ComboBox<>("Last Users");
-        comboBox.addClassName("home-view-combo-box-1");
-        Button setUser = new Button("SET USER");
-        setUser.setWidth("190px");
-        setUser.getStyle().set("background-color", "#4e8752");
-        setUser.getStyle().set("color", "white");
-        setUser.addClickListener(e -> {
-            //Dodaj zapisywanie do listy obiektu ilosc x modul
-            Notification.show("User added!");
-        });
-        List<String> items = new ArrayList<>();
-        //Dopisac uzytkownikow ktorzy istnieja w bazie danych
-        items.add("");
-        items.add("My Data");
-        comboBox.setAllowCustomValue(true);
-        comboBox.setItems(items);
 
-        return new VerticalLayout(comboBox, user, setUser);
-    }
 
-    private static VerticalLayout sizesBox() {
-        ComboBox<String> comboBox = new ComboBox<>("Sizes");
-        //<theme-editor-local-classname>
-        comboBox.setOverlayClassName("home-view-combo-box-1");
-        //<theme-editor-local-classname>
-        comboBox.addClassName("home-view-combo-box-1");
 
-        RadioButtonGroup<Integer> radioButtonGroup = new RadioButtonGroup<>();
-        radioButtonGroup.setLabel("Quantity");
-        radioButtonGroup.addClassName("home-view-combo-box-1");
-        radioButtonGroup.setItems(
-                IntStream.rangeClosed(1, 6)
-                        .boxed()
-                        .collect(Collectors.toList())
-        );
-
-        Button add = new Button(VaadinIcon.PLUS.create());
-        add.setWidth("190px");
-        add.getStyle().set("background-color", "#4e8752");
-        add.getStyle().set("color", "white");
-        add.addClickListener(e -> {
-            //Dodaj zapisywanie do listy obiektu ilosc x modul
-            Notification.show("Added!");
-        });
-
-        List<Size> items = Size.getSizes();
-        comboBox.setAllowCustomValue(true);
-        comboBox.setItems(items
-                .stream()
-                .filter(e -> e.getSize() > 0.5f)
-                .map(e -> String.valueOf(e.getSize()))
-                .toList());
-
-        return new VerticalLayout(comboBox, radioButtonGroup, add);
-    }
 
     private static VerticalLayout framesBoxes() {
 

@@ -22,10 +22,10 @@ public class Scaffold {
     private Long id;
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "JSON")
-    private List<CalculateModule> modules;
+    private List<ScaffoldModule> modules;
     private boolean done;
     private float height;
-    private Size frameSize;
+    private Dimension frameDim;
     private String username;
     private float totalLength;
     private float resultSquareMeters;

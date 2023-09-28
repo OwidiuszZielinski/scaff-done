@@ -14,7 +14,6 @@ public class ScaffoldGrid extends Grid<Scaffold> {
     public ScaffoldGrid() {
 
         initColumns();
-
         addComponentColumn(item -> {
             Button doneButton = new Button("Done");
             doneButtonHandler(item, doneButton);
@@ -102,7 +101,7 @@ public class ScaffoldGrid extends Grid<Scaffold> {
         addColumn(Scaffold::getId).setHeader("Id");
         addColumn(Scaffold::getUsername).setHeader("User");
         addColumn(Scaffold::getModules).setHeader("Modules");
-        addColumn(Scaffold::getFrameSize).setHeader("Frames");
+        addColumn(Scaffold::getFrameDim).setHeader("Frames");
         addColumn(Scaffold::getHeight).setHeader("Height");
         addColumn(Scaffold::getTotalLength).setHeader("Total Length");
         addColumn(Scaffold::getResultSquareMeters).setHeader("Square Meters");
