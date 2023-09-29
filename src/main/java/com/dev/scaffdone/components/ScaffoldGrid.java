@@ -28,7 +28,7 @@ public class ScaffoldGrid extends Grid<Scaffold> {
             buttonGreenStyle(moreButton);
             moreButtonHandler(item, moreButton);
             return moreButton;
-        }).setHeader("Additional Info");
+        }).setHeader("Other Info");
 
         addComponentColumn(item -> {
             Button delete = new Button(VaadinIcon.TRASH.create());
@@ -50,8 +50,9 @@ public class ScaffoldGrid extends Grid<Scaffold> {
 
     private static void moreButtonHandler(Scaffold item, Button moreButton) {
         moreButton.addClickListener(click -> {
-            TextArea dialogTextArea = new TextArea(item.getAdditionalInfo());
+            TextArea dialogTextArea = new TextArea("Other Information");
             dialogTextArea.setReadOnly(true);
+            dialogTextArea.setValue(item.getOtherInformation());
             VerticalLayout dialogLayout = new VerticalLayout(dialogTextArea);
             dialogLayout.setAlignItems(FlexComponent.Alignment.STRETCH);
             Dialog moreInfoDialog = new Dialog(dialogLayout);
@@ -65,7 +66,7 @@ public class ScaffoldGrid extends Grid<Scaffold> {
     }
 
     private static void dialogStyle(Dialog moreInfoDialog) {
-        moreInfoDialog.setHeaderTitle("Additional Information");
+        moreInfoDialog.setHeaderTitle("Other Information");
         moreInfoDialog.setWidth("600px");
         moreInfoDialog.setHeight("400px");
     }

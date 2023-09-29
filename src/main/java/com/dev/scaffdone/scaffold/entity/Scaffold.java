@@ -31,7 +31,7 @@ public class Scaffold {
     private float resultSquareMeters;
     @ManyToOne
     private UserDetails userDetails;
-    private String additionalInfo;
+    private String otherInformation;
 
 
 }

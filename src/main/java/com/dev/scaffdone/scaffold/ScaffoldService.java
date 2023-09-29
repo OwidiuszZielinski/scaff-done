@@ -30,7 +30,7 @@ public class ScaffoldService {
                 .height(scaffold.getHeight())
                 .frameDim(scaffold.getFrameDim())
                 .totalLength(length)
-                .additionalInfo(scaffold.getAdditionalInfo())
+                .otherInformation(scaffold.getOtherInformation())
                 .resultSquareMeters(
                         calculateSquareMeters(
                                 length,
