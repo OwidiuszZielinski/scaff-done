@@ -29,7 +29,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
 
 
-        add(new H1("Vaadin CRM"), login);
+        add(new H1("Scaffold Done"), login);
     }
 
     @Override
