@@ -1,20 +1,23 @@
 package com.dev.scaffdone.components;
 
+import com.dev.scaffdone.core.scaffolding.ScaffoldingService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Getter
 public class UserSelectionManager extends VerticalLayout {
 
     private String userName;
+    private final ScaffoldingService scaffoldingService;
 
-
-    public UserSelectionManager() {
+    public UserSelectionManager(ScaffoldingService service) {
+        this.scaffoldingService = service;
         TextField customUser = new TextField("Custom User");
         customUser.addClassName("home-view-text-field-1");
         ComboBox<String> lastUsers = new ComboBox<>("Last Users");
@@ -38,12 +41,10 @@ public class UserSelectionManager extends VerticalLayout {
         add(lastUsers, customUser, setUser);
     }
 
-    private static void setUsers(ComboBox<String> comboBox) {
-        List<String> items = new ArrayList<>();
+    private void setUsers(ComboBox<String> comboBox) {
+        List<String> items = scaffoldingService.getUsedUsers();
         //Dopisac uzytkownikow ktorzy istnieja w bazie danych
-        items.add("");
-        items.add("My Data");
-        comboBox.setAllowCustomValue(true);
+        comboBox.setAllowCustomValue(false);
         comboBox.setItems(items);
     }
 
@@ -55,11 +56,8 @@ public class UserSelectionManager extends VerticalLayout {
         return setUser;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
 }

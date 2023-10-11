@@ -6,6 +6,7 @@ import com.dev.scaffdone.core.scaffolding.model.ScaffoldingModule;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ScaffoldingService {
@@ -37,6 +38,13 @@ public class ScaffoldingService {
 
     public static float calculateLength(List<ScaffoldingModule> sizes) {
         return sizes.stream().map(e -> e.getDimension() * e.getQuantity()).reduce(0f, Float::sum);
+    }
+
+    public List<String> getUsedUsers(){
+        return scaffoldingDataRepository.findAll().stream()
+                .map(Scaffolding::getUsername)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     public List<Scaffolding> getScaffolds() {
