@@ -11,6 +11,9 @@ import java.util.List;
 
 public class UserSelectionManager extends VerticalLayout {
 
+    private String userName;
+
+
     public UserSelectionManager() {
         TextField customUser = new TextField("Custom User");
         customUser.addClassName("home-view-text-field-1");
@@ -19,11 +22,20 @@ public class UserSelectionManager extends VerticalLayout {
         Button setUser = userButton("SET USER");
 
         setUser.addClickListener(e -> {
-            //Dodaj zapisywanie do listy obiektu ilosc x modul
-            Notification.show("User added!");
+            if (customUser.getValue().isBlank() && lastUsers.getValue() == null) {
+                Notification.show("User is required");
+                return;
+            }
+            if (customUser.getValue().isBlank()) {
+                this.userName = lastUsers.getValue();
+            } else {
+                this.userName = customUser.getValue();
+            }
+            System.out.println("My first field of calculation " + userName);
+            Notification.show("User " + userName + " added!");
         });
         setUsers(lastUsers);
-        add(lastUsers,customUser,setUser);
+        add(lastUsers, customUser, setUser);
     }
 
     private static void setUsers(ComboBox<String> comboBox) {
@@ -41,5 +53,13 @@ public class UserSelectionManager extends VerticalLayout {
         setUser.getStyle().set("background-color", "#4e8752");
         setUser.getStyle().set("color", "white");
         return setUser;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

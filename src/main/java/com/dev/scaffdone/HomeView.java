@@ -4,19 +4,22 @@ package com.dev.scaffdone;
 import com.dev.scaffdone.components.*;
 import com.dev.scaffdone.core.scaffolding.ScaffoldingService;
 import com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO;
-import com.dev.scaffdone.core.scaffolding.model.ScaffoldingModule;
-import com.dev.scaffdone.core.scaffolding.model.Scaffolding;
 import com.dev.scaffdone.core.scaffolding.model.Dimension;
+import com.dev.scaffdone.core.scaffolding.model.Scaffolding;
+import com.dev.scaffdone.core.scaffolding.model.ScaffoldingModule;
+import com.github.javafaker.Faker;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.Theme;
 import jakarta.annotation.security.RolesAllowed;
+import reactor.core.publisher.Flux;
 
+import java.time.Duration;
 import java.util.List;
 
 @Route("main")
@@ -32,10 +35,14 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
         H1 header = new H1("Scaffold Done");
         header.addClassName("home-view-h1-1");
         VerticalLayout title = new VerticalLayout(header);
+        UserSelectionManager userSelectionManager = new UserSelectionManager();
+
+
         add(
                 title,
                 grid,
-                new HorizontalLayout(new UserSelectionManager(),
+                new HorizontalLayout(
+                        userSelectionManager,
                         new DimensionQuantityManager(),
                         new FrameDimensionManager(),
                         new HeightManager()),
@@ -66,14 +73,19 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
     private static HorizontalLayout calculation() {
         TextField sizeTextField = new TextField("Enter size");
         TextField sizeLabel = new TextField("Current size is: ");
-
-        // Set ValueChangeMode to EAGER to get real-time updates
-        sizeTextField.setValueChangeMode(ValueChangeMode.EAGER);
-        // Add a value change listener
         sizeTextField.addValueChangeListener(event -> {
-             //sizeLabel.setValue(String.valueOf(currentCalculation));  // Update the Label
+            String currentSize = sizeTextField.getValue(); // Blokujemy strumień, aby uzyskać aktualną wartość
+            VaadinSession.getCurrent().lock(); // Blokujemy sesję przed modyfikacją interfejsu użytkownika
+            sizeLabel.setValue(currentSize);
+            VaadinSession.getCurrent().unlock(); // Odblokowujemy sesję
         });
-        return new HorizontalLayout(sizeTextField, sizeLabel);
+
+        return new HorizontalLayout(sizeTextField,sizeLabel);
     }
+
+    private static Flux<Long> getData(Float currentCalculation) {
+        return Flux.interval(Duration.ofMillis(50)).map(sequence->currentCalculation.longValue());
+    }
+
 
 }
