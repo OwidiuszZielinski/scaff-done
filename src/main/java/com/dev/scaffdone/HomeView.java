@@ -2,18 +2,14 @@ package com.dev.scaffdone;
 
 
 import com.dev.scaffdone.components.*;
-import com.dev.scaffdone.scaffold.ScaffoldService;
-import com.dev.scaffdone.scaffold.entity.ScaffoldModule;
-import com.dev.scaffdone.scaffold.entity.Scaffold;
-import com.dev.scaffdone.scaffold.entity.Dimension;
-import com.vaadin.flow.component.button.Button;
+import com.dev.scaffdone.core.scaffold.ScaffoldService;
+import com.dev.scaffdone.core.scaffold.model.ScaffoldModule;
+import com.dev.scaffdone.core.scaffold.model.Scaffold;
+import com.dev.scaffdone.core.scaffold.model.Dimension;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.AppShellConfigurator;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
@@ -23,7 +19,7 @@ import jakarta.annotation.security.RolesAllowed;
 import java.util.List;
 
 @Route("main")
-@RolesAllowed("ADMIN")
+@RolesAllowed({"ADMIN","USER"})
 @Theme("scaff-done")
 public class HomeView extends VerticalLayout implements AppShellConfigurator {
 

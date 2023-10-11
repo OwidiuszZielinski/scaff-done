@@ -1,6 +1,6 @@
 package com.dev.scaffdone.components;
 
-import com.dev.scaffdone.scaffold.entity.Scaffold;
+import com.dev.scaffdone.core.scaffold.model.Scaffold;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;

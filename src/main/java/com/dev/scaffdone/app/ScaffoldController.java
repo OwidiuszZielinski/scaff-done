@@ -1,4 +1,4 @@
-package com.dev.scaffdone.scaffold;
+package com.dev.scaffdone.app;
 
 import org.springframework.stereotype.Controller;
 

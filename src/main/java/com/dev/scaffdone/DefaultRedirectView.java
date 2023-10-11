@@ -1,6 +1,7 @@
-package com.dev.scaffdone.scaffold;
+package com.dev.scaffdone;
 
 import com.dev.scaffdone.HomeView;
+import com.dev.scaffdone.LoginView;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -17,7 +18,7 @@ public class DefaultRedirectView extends VerticalLayout implements BeforeEnterOb
     public void beforeEnter(BeforeEnterEvent event) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication != null && authentication.isAuthenticated() ) {
+        if (authentication != null && authentication.isAuthenticated()) {
             System.out.println(authentication.isAuthenticated());
             event.forwardTo(HomeView.class);
         } else {

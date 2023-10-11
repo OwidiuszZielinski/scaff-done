@@ -1,6 +1,7 @@
-package com.dev.scaffdone.scaffold.entity;
+package com.dev.scaffdone.core.scaffold.model;
 
 
+import com.dev.scaffdone.core.user.UserDetails;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -17,7 +18,7 @@ import java.util.List;
 @Entity
 public class Scaffold {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     @JdbcTypeCode(SqlTypes.JSON)

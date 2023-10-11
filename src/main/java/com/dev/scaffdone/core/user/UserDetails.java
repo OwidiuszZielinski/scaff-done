@@ -1,4 +1,4 @@
-package com.dev.scaffdone.scaffold.entity;
+package com.dev.scaffdone.core.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

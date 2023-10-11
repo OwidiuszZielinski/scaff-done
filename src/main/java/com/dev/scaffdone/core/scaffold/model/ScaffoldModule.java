@@ -1,4 +1,4 @@
-package com.dev.scaffdone.scaffold.entity;
+package com.dev.scaffdone.core.scaffold.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
