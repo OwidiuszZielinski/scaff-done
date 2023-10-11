@@ -1,6 +1,7 @@
 package com.dev.scaffdone.components;
 
-import com.dev.scaffdone.core.scaffold.model.Scaffold;
+import com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO;
+import com.dev.scaffdone.core.scaffolding.model.Scaffolding;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
@@ -10,7 +11,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 
-public class ScaffoldGrid extends Grid<Scaffold> {
+public class ScaffoldGrid extends Grid<Scaffolding> {
     public ScaffoldGrid() {
 
         initColumns();
@@ -48,7 +49,7 @@ public class ScaffoldGrid extends Grid<Scaffold> {
         delete.getStyle().set("color", "white");
     }
 
-    private static void moreButtonHandler(Scaffold item, Button moreButton) {
+    private static void moreButtonHandler(Scaffolding item, Button moreButton) {
         moreButton.addClickListener(click -> {
             TextArea dialogTextArea = new TextArea("Other Information");
             dialogTextArea.setReadOnly(true);
@@ -76,7 +77,7 @@ public class ScaffoldGrid extends Grid<Scaffold> {
         moreButton.getStyle().set("color", "white");
     }
 
-    private static void doneButtonHandler(Scaffold item, Button button) {
+    private static void doneButtonHandler(Scaffolding item, Button button) {
         if (item.isDone()) {
             button.setText("YES");
             buttonGreenStyle(button);
@@ -86,7 +87,7 @@ public class ScaffoldGrid extends Grid<Scaffold> {
         }
     }
 
-    private static void isDoneHandler(Scaffold item, Button button) {
+    private static void isDoneHandler(Scaffolding item, Button button) {
         if (item.isDone()) {
             item.setDone(false);
             button.setText("NO");
@@ -99,12 +100,12 @@ public class ScaffoldGrid extends Grid<Scaffold> {
     }
 
     private void initColumns() {
-        addColumn(Scaffold::getId).setHeader("Id");
-        addColumn(Scaffold::getUsername).setHeader("User");
-        addColumn(Scaffold::getModules).setHeader("Modules");
-        addColumn(Scaffold::getFrameDim).setHeader("Frames");
-        addColumn(Scaffold::getHeight).setHeader("Height");
-        addColumn(Scaffold::getTotalLength).setHeader("Total Length");
-        addColumn(Scaffold::getResultSquareMeters).setHeader("Square Meters");
+        addColumn(Scaffolding::getId).setHeader("Id");
+        addColumn(Scaffolding::getUsername).setHeader("User");
+        addColumn(Scaffolding::getModules).setHeader("Modules");
+        addColumn(Scaffolding::getFrameDim).setHeader("Frames");
+        addColumn(Scaffolding::getHeight).setHeader("Height");
+        addColumn(Scaffolding::getTotalLength).setHeader("Total Length");
+        addColumn(Scaffolding::getResultSquareMeters).setHeader("Square Meters");
     }
 }

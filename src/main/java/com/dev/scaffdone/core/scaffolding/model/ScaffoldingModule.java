@@ -1,11 +1,13 @@
-package com.dev.scaffdone.core.scaffold.model;
+package com.dev.scaffdone.core.scaffolding.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class ScaffoldModule {
+@NoArgsConstructor
+public class ScaffoldingModule {
 
     private float dimension;
     private int quantity;

@@ -1,4 +1,4 @@
-package com.dev.scaffdone.core.scaffold.model;
+package com.dev.scaffdone.core.scaffolding.model;
 
 
 import lombok.Getter;

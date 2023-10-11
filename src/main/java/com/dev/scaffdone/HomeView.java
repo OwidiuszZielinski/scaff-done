@@ -2,10 +2,11 @@ package com.dev.scaffdone;
 
 
 import com.dev.scaffdone.components.*;
-import com.dev.scaffdone.core.scaffold.ScaffoldService;
-import com.dev.scaffdone.core.scaffold.model.ScaffoldModule;
-import com.dev.scaffdone.core.scaffold.model.Scaffold;
-import com.dev.scaffdone.core.scaffold.model.Dimension;
+import com.dev.scaffdone.core.scaffolding.ScaffoldingService;
+import com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO;
+import com.dev.scaffdone.core.scaffolding.model.ScaffoldingModule;
+import com.dev.scaffdone.core.scaffolding.model.Scaffolding;
+import com.dev.scaffdone.core.scaffolding.model.Dimension;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -19,12 +20,13 @@ import jakarta.annotation.security.RolesAllowed;
 import java.util.List;
 
 @Route("main")
-@RolesAllowed({"ADMIN","USER"})
+@RolesAllowed({ "ADMIN", "USER" })
 @Theme("scaff-done")
 public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
 
-    public HomeView(ScaffoldService service) {
+
+    public HomeView(ScaffoldingService service) {
         ScaffoldGrid grid = new ScaffoldGrid();
         initExampleData(service, grid);
         H1 header = new H1("Scaffold Done");
@@ -37,26 +39,27 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
                         new DimensionQuantityManager(),
                         new FrameDimensionManager(),
                         new HeightManager()),
-                        new OtherInformationManager(),
-                        calculation()
+                new OtherInformationManager(),
+                calculation()
 
         );
     }
 
-    private static void initExampleData(ScaffoldService service, ScaffoldGrid grid) {
-        final Scaffold owi = Scaffold.builder().id(1L).modules(List.of(new ScaffoldModule(Dimension.SIZE_073.getSize(), 5)))
+    private static void initExampleData(ScaffoldingService service, ScaffoldGrid grid) {
+        Scaffolding owi = Scaffolding.builder().modules(List.of(new ScaffoldingModule(Dimension.SIZE_073.getSize(), 5)))
                 .done(true)
                 .otherInformation("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
-                .username("Owi").height(10.0f).build();
+                .username("TWOJA STARA").height(10.0f).build();
 
-        final Scaffold owi2 = Scaffold.builder().id(1L).modules(List.of(new ScaffoldModule(Dimension.SIZE_073.getSize(), 5)))
+        Scaffolding owi2 = Scaffolding.builder().modules(List.of(new ScaffoldingModule(Dimension.SIZE_073.getSize(), 5)))
                 .done(true)
                 .otherInformation("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
-                .username("Owi").height(10.0f).build();
+                .username("TWOJA STARA").height(10.0f).build();
+        service.add(ScaffoldingDTO.from(owi));
+        service.add(ScaffoldingDTO.from(owi2));
 
         grid.setItems(
-                service.add(owi),
-                service.add(owi2)
+                service.getScaffolds()
         );
     }
 
@@ -66,10 +69,9 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
         // Set ValueChangeMode to EAGER to get real-time updates
         sizeTextField.setValueChangeMode(ValueChangeMode.EAGER);
-
         // Add a value change listener
         sizeTextField.addValueChangeListener(event -> {
-            // sizeLabel.setValue(String.valueOf(currentCalculation));  // Update the Label
+             //sizeLabel.setValue(String.valueOf(currentCalculation));  // Update the Label
         });
         return new HorizontalLayout(sizeTextField, sizeLabel);
     }

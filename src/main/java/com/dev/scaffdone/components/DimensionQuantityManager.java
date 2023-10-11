@@ -1,6 +1,6 @@
 package com.dev.scaffdone.components;
 
-import com.dev.scaffdone.core.scaffold.model.Dimension;
+import com.dev.scaffdone.core.scaffolding.model.Dimension;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.icon.VaadinIcon;
