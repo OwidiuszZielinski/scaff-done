@@ -1,6 +1,7 @@
 package com.dev.scaffdone.core.scaffolding;
 
 import com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO;
+import com.dev.scaffdone.core.scaffolding.model.Dimension;
 import com.dev.scaffdone.core.scaffolding.model.Scaffolding;
 import com.dev.scaffdone.core.scaffolding.model.ScaffoldingModule;
 import org.springframework.stereotype.Service;
@@ -50,4 +51,20 @@ public class ScaffoldingService {
     public List<Scaffolding> getScaffolds() {
         return scaffoldingDataRepository.findAll();
     }
+
+    public void initTestData() {
+        System.out.println("@@@@@@@@@@@wywolana");
+        Scaffolding owi = Scaffolding.builder().modules(List.of(new ScaffoldingModule(Dimension.SIZE_073.getSize(), 5)))
+                .done(true)
+                .otherInformation("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
+                .username("TWOJA STARA").height(10.0f).build();
+
+        Scaffolding owi2 = Scaffolding.builder().modules(List.of(new ScaffoldingModule(Dimension.SIZE_073.getSize(), 5)))
+                .done(true)
+                .otherInformation("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
+                .username("Powidiusz").height(10.0f).build();
+        scaffoldingDataRepository.save(owi);
+        scaffoldingDataRepository.save(owi2);
+    }
+
 }

@@ -43,7 +43,6 @@ public class UserSelectionManager extends VerticalLayout {
 
     private void setUsers(ComboBox<String> comboBox) {
         List<String> items = scaffoldingService.getUsedUsers();
-        //Dopisac uzytkownikow ktorzy istnieja w bazie danych
         comboBox.setAllowCustomValue(false);
         comboBox.setItems(items);
     }

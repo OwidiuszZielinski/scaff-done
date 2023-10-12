@@ -3,10 +3,6 @@ package com.dev.scaffdone;
 
 import com.dev.scaffdone.components.*;
 import com.dev.scaffdone.core.scaffolding.ScaffoldingService;
-import com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO;
-import com.dev.scaffdone.core.scaffolding.model.Dimension;
-import com.dev.scaffdone.core.scaffolding.model.Scaffolding;
-import com.dev.scaffdone.core.scaffolding.model.ScaffoldingModule;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -19,42 +15,29 @@ import jakarta.annotation.security.RolesAllowed;
 import reactor.core.publisher.Flux;
 
 import java.time.Duration;
-import java.util.List;
 
 @Route("main")
 @RolesAllowed({ "ADMIN", "USER" })
 @Theme("scaff-done")
 public class HomeView extends VerticalLayout implements AppShellConfigurator {
-
-
+    private final ScaffoldingService service;
 
     public HomeView(ScaffoldingService service) {
-        Scaffolding owi = Scaffolding.builder().modules(List.of(new ScaffoldingModule(Dimension.SIZE_073.getSize(), 5)))
-                .done(true)
-                .otherInformation("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
-                .username("TWOJA STARA").height(10.0f).build();
-
-        Scaffolding owi2 = Scaffolding.builder().modules(List.of(new ScaffoldingModule(Dimension.SIZE_073.getSize(), 5)))
-                .done(true)
-                .otherInformation("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
-                .username("Powidiusz").height(10.0f).build();
-        service.add(ScaffoldingDTO.from(owi));
-        service.add(ScaffoldingDTO.from(owi2));
-
+        this.service = service;
         ScaffoldGrid grid = new ScaffoldGrid();
-        initExampleData(service, grid);
+        initExampleData(grid);
         H1 header = new H1("Scaffold Done");
         header.addClassName("home-view-h1-1");
         VerticalLayout title = new VerticalLayout(header);
-        UserSelectionManager userSelectionManager = new UserSelectionManager(service);
-
+        UserSelectionManager userSelectionManager = new UserSelectionManager(this.service);
+        DimensionQuantityManager dimensionQuantityManager = new DimensionQuantityManager();
 
         add(
                 title,
                 grid,
                 new HorizontalLayout(
                         userSelectionManager,
-                        new DimensionQuantityManager(),
+                        dimensionQuantityManager,
                         new FrameDimensionManager(),
                         new HeightManager()),
                 new OtherInformationManager(),
@@ -63,9 +46,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
         );
     }
 
-    private static void initExampleData(ScaffoldingService service, ScaffoldGrid grid) {
-
-
+    private void initExampleData(ScaffoldGrid grid) {
         grid.setItems(
                 service.getScaffolds()
         );

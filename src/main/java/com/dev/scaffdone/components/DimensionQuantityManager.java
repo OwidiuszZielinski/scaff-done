@@ -1,18 +1,27 @@
 package com.dev.scaffdone.components;
 
 import com.dev.scaffdone.core.scaffolding.model.Dimension;
+import com.dev.scaffdone.core.scaffolding.model.ScaffoldingModule;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import lombok.Getter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Getter
 public class DimensionQuantityManager extends VerticalLayout {
+
+    public void setScaffoldingModule(ScaffoldingModule scaffoldingModule) {
+        this.scaffoldingModule = scaffoldingModule;
+    }
+
+    private ScaffoldingModule scaffoldingModule;
 
     public DimensionQuantityManager() {
 
@@ -22,13 +31,27 @@ public class DimensionQuantityManager extends VerticalLayout {
         quantities.setItems(
                 initQuantities()
         );
+        quantities.setValue(1);
 
         Button plus = createDimQtyButton();
+        ComboBox<String> dimensions = initDimensionsBox();
         plus.addClickListener(e -> {
-            //Dodaj zapisywanie do listy obiektu ilosc x modul
+            if (dimensions.getValue() == null) {
+                Notification.show("Dimension is required");
+                return;
+            }
+            if (quantities.getValue() == 0) {
+                Notification.show("Quantities is required");
+                return;
+            } else {
+                this.scaffoldingModule = new ScaffoldingModule(
+                        Float.parseFloat(dimensions.getValue()),
+                        quantities.getValue());
+            }
+            System.out.println(scaffoldingModule);
             Notification.show("Added!");
         });
-        ComboBox<String> dimensions = initDimensionsBox();
+
         add(dimensions, quantities, plus);
     }
 
@@ -40,7 +63,8 @@ public class DimensionQuantityManager extends VerticalLayout {
         dimensions.setItems(items
                 .stream()
                 .filter(e -> e.getSize() > 0.5f)
-                .map(e -> String.valueOf(e.getSize()))
+                .map(e -> String.format("%.2f", e.getSize()))
+                .map(e->e.replace(",","."))
                 .toList());
         return dimensions;
     }
