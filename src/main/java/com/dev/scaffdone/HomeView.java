@@ -26,7 +26,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
         this.service = service;
         ScaffoldGrid grid = new ScaffoldGrid();
         initExampleData(grid);
-        H1 header = new H1("Scaffold Done");
+        H1 header = new H1("Scaffolding Done");
         header.addClassName("home-view-h1-1");
         VerticalLayout title = new VerticalLayout(header);
         UserSelectionManager userSelectionManager = new UserSelectionManager(this.service);
@@ -38,7 +38,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
                 new HorizontalLayout(
                         userSelectionManager,
                         dimensionQuantityManager,
-                        new FrameDimensionManager(),
+                        new FrameLengthManager(),
                         new HeightManager()),
                 new OtherInformationManager(),
                 calculation()
