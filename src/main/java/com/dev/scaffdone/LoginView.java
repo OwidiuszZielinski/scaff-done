@@ -25,7 +25,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
 
 
-        add(new H1("Scaffold Done"), login);
+        add(new H1("Scaffolding Done"), login);
     }
 
     @Override

@@ -53,16 +53,15 @@ public class ScaffoldingService {
     }
 
     public void initTestData() {
-        System.out.println("@@@@@@@@@@@wywolana");
         Scaffolding owi = Scaffolding.builder().modules(List.of(new ScaffoldingModule(Dimension.SIZE_073.getSize(), 5)))
                 .done(true)
                 .otherInformation("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
-                .username("TWOJA STARA").height(10.0f).build();
+                .username("Lukasz").height(10.0f).build();
 
         Scaffolding owi2 = Scaffolding.builder().modules(List.of(new ScaffoldingModule(Dimension.SIZE_073.getSize(), 5)))
                 .done(true)
                 .otherInformation("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
-                .username("Powidiusz").height(10.0f).build();
+                .username("Tomek").height(10.0f).build();
         scaffoldingDataRepository.save(owi);
         scaffoldingDataRepository.save(owi2);
     }

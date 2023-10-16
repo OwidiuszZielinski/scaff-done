@@ -32,6 +32,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
         UserSelectionManager userSelectionManager = new UserSelectionManager(this.service);
         DimensionQuantityManager dimensionQuantityManager = new DimensionQuantityManager();
 
+
         add(
                 title,
                 grid,

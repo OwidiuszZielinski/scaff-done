@@ -17,11 +17,8 @@ import java.util.stream.IntStream;
 @Getter
 public class DimensionQuantityManager extends VerticalLayout {
 
-    public void setScaffoldingModule(ScaffoldingModule scaffoldingModule) {
-        this.scaffoldingModule = scaffoldingModule;
-    }
 
-    private ScaffoldingModule scaffoldingModule;
+    private List<ScaffoldingModule> scaffoldingModule;
 
     public DimensionQuantityManager() {
 
@@ -44,9 +41,9 @@ public class DimensionQuantityManager extends VerticalLayout {
                 Notification.show("Quantities is required");
                 return;
             } else {
-                this.scaffoldingModule = new ScaffoldingModule(
+                this.scaffoldingModule.add( new ScaffoldingModule(
                         Float.parseFloat(dimensions.getValue()),
-                        quantities.getValue());
+                        quantities.getValue()));
             }
             System.out.println(scaffoldingModule);
             Notification.show("Added!");
@@ -82,6 +79,11 @@ public class DimensionQuantityManager extends VerticalLayout {
                 .boxed()
                 .collect(Collectors.toList());
     }
+
+    public void setScaffoldingModule(List<ScaffoldingModule> scaffoldingModule) {
+        this.scaffoldingModule = scaffoldingModule;
+    }
+
 
 }
 

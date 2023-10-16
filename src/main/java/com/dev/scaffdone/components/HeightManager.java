@@ -13,11 +13,39 @@ import java.util.stream.IntStream;
 
 public class HeightManager extends VerticalLayout {
 
+
+    private float scaffoldingHeight;
+    private Integer value;
+
     public HeightManager() {
         RadioButtonGroup<Integer> heightsRadioButtonGroup = createHeightsRadioButtonGroup();
-
         TextField customHeight = new TextField("Custom Height");
         Button setHeightButton = createSetHeightButton();
+
+        setHeightButton.addClickListener(event ->
+        {
+            if (heightsRadioButtonGroup.getValue() == null && customHeight.getValue().isBlank()) {
+                Notification.show("Height is required");
+            }
+            else if (heightsRadioButtonGroup.getValue() != null && !customHeight.getValue().isBlank()) {
+                this.scaffoldingHeight = Float.parseFloat(customHeight.getValue());
+                Notification.show("Height has been set!");
+                System.out.println("Height " + scaffoldingHeight);
+            }
+             else if (heightsRadioButtonGroup.getValue() == null){
+                this.scaffoldingHeight = Float.parseFloat(customHeight.getValue());
+                Notification.show("Height has been set!");
+                System.out.println("Height " + scaffoldingHeight);
+
+            } else {
+                Notification.show("Height has been set!");
+                this.scaffoldingHeight = heightsRadioButtonGroup.getValue();
+                System.out.println("Height " + scaffoldingHeight);
+
+            }
+        });
+
+
         HorizontalLayout layout = new HorizontalLayout(customHeight,setHeightButton);
         customHeight.addClassName("home-view-text-field-1");
         add(heightsRadioButtonGroup,layout);
@@ -27,10 +55,6 @@ public class HeightManager extends VerticalLayout {
         Button setHeightButton = new Button("SET HEIGHT");
         setHeightButton.setWidth("190px");
         setGreenColorButton(setHeightButton);
-        setHeightButton.addClickListener(e -> {
-            //Dodaj zapisywanie do listy obiektu ilosc x modul
-            Notification.show("Height Set!");
-        });
         return setHeightButton;
     }
 
@@ -40,23 +64,19 @@ public class HeightManager extends VerticalLayout {
         setHeightButton.getStyle().set("color", "white");
     }
 
-    private static RadioButtonGroup<Integer> createHeightsRadioButtonGroup() {
+    private RadioButtonGroup <Integer> createHeightsRadioButtonGroup() {
         RadioButtonGroup<Integer> radioButtonGroup = new RadioButtonGroup<>();
         radioButtonGroup.setLabel("Height");
         radioButtonGroup.setItems(
                 initHeights()
         );
-        radioButtonGroup.addValueChangeListener(event ->
-        {
-            //  currentCalculation = radioButtonGroup.getValue();
-
-        });
+        radioButtonGroup.setValue(1);
         return radioButtonGroup;
     }
 
     private static List<Integer> initHeights() {
-        return IntStream.rangeClosed(2, 36)
-                .filter(n -> n % 2 == 0)
+        return IntStream.rangeClosed(1, 36)
+                .filter(n -> n % 2 == 0 || n == 1)
                 .boxed()
                 .collect(Collectors.toList());
     }
