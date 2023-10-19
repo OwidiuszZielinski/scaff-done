@@ -1,27 +1,23 @@
 package com.dev.scaffdone.components;
 
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import lombok.Getter;
 import lombok.Setter;
-
+@Getter
+@Setter
 public class ResultManager extends HorizontalLayout {
 
     private float length;
 
     private float height;
 
-    @Getter
-    @Setter
+
     private TextArea resultOfLength = new TextArea("Current length");
 
-    @Getter
-    @Setter
     private TextArea resultOfHeight = new TextArea("Current height");
 
-    @Getter
-    @Setter
+
     private TextArea resultOfSquareMeters = new TextArea("Square meters");
 
     public ResultManager() {
