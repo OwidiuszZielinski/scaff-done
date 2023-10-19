@@ -10,6 +10,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -18,10 +19,11 @@ import java.util.stream.IntStream;
 public class DimensionQuantityManager extends VerticalLayout {
 
 
-    private List<ScaffoldingModule> scaffoldingModule;
+    private final List<ScaffoldingModule> scaffoldingModules = new ArrayList<>();
+    private final ResultManager resultManager;
 
-    public DimensionQuantityManager() {
-
+    public DimensionQuantityManager(ResultManager resultManager) {
+        this.resultManager = resultManager;
         RadioButtonGroup<Integer> quantities = new RadioButtonGroup<>();
         quantities.setLabel("Quantity");
         quantities.addClassName("home-view-combo-box-1");
@@ -29,7 +31,6 @@ public class DimensionQuantityManager extends VerticalLayout {
                 initQuantities()
         );
         quantities.setValue(1);
-
         Button plus = createDimQtyButton();
         ComboBox<String> dimensions = initDimensionsBox();
         plus.addClickListener(e -> {
@@ -41,11 +42,12 @@ public class DimensionQuantityManager extends VerticalLayout {
                 Notification.show("Quantities is required");
                 return;
             } else {
-                this.scaffoldingModule.add( new ScaffoldingModule(
+                this.scaffoldingModules.add(new ScaffoldingModule(
                         Float.parseFloat(dimensions.getValue()),
                         quantities.getValue()));
             }
-            System.out.println(scaffoldingModule);
+            System.out.println(scaffoldingModules);
+            resultManager.setLength(calculateTotalLengthFromModule());
             Notification.show("Added!");
         });
 
@@ -61,7 +63,7 @@ public class DimensionQuantityManager extends VerticalLayout {
                 .stream()
                 .filter(e -> e.getSize() > 0.5f)
                 .map(e -> String.format("%.2f", e.getSize()))
-                .map(e->e.replace(",","."))
+                .map(e -> e.replace(",", "."))
                 .toList());
         return dimensions;
     }
@@ -80,10 +82,14 @@ public class DimensionQuantityManager extends VerticalLayout {
                 .collect(Collectors.toList());
     }
 
-    public void setScaffoldingModule(List<ScaffoldingModule> scaffoldingModule) {
-        this.scaffoldingModule = scaffoldingModule;
-    }
 
+    public float calculateTotalLengthFromModule() {
+        float sum = 0f;
+        for(ScaffoldingModule scaffolding : scaffoldingModules){
+            sum += scaffolding.getDimension() * scaffolding.getQuantity();
+        }
+        return (float) (Math.round(sum * 100.0) / 100.0);
+    }
 
 }
 

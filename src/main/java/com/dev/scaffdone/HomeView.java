@@ -29,8 +29,13 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
         H1 header = new H1("Scaffolding Done");
         header.addClassName("home-view-h1-1");
         VerticalLayout title = new VerticalLayout(header);
+
+        ResultManager resultManager = new ResultManager();
+        resultManager.getStyle().set("margin-left", "950px");
         UserSelectionManager userSelectionManager = new UserSelectionManager(this.service);
-        DimensionQuantityManager dimensionQuantityManager = new DimensionQuantityManager();
+        DimensionQuantityManager dimensionQuantityManager = new DimensionQuantityManager(resultManager);
+        OtherLengthManager otherLengthManager = new OtherLengthManager(resultManager);
+        HeightManager heightManager = new HeightManager(resultManager);
 
 
         add(
@@ -39,12 +44,14 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
                 new HorizontalLayout(
                         userSelectionManager,
                         dimensionQuantityManager,
-                        new FrameLengthManager(),
-                        new HeightManager()),
-                new OtherInformationManager(),
-                calculation()
+                        otherLengthManager,
+                        heightManager),
+                new HorizontalLayout(
+                        new OtherInformationManager()
+                        ,resultManager
 
-        );
+
+        ));
     }
 
     private void initExampleData(ScaffoldGrid grid) {

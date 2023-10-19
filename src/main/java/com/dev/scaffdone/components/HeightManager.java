@@ -14,10 +14,7 @@ import java.util.stream.IntStream;
 public class HeightManager extends VerticalLayout {
 
 
-    private float scaffoldingHeight;
-    private Integer value;
-
-    public HeightManager() {
+    public HeightManager(ResultManager resultManager) {
         RadioButtonGroup<Integer> heightsRadioButtonGroup = createHeightsRadioButtonGroup();
         TextField customHeight = new TextField("Custom Height");
         Button setHeightButton = createSetHeightButton();
@@ -28,19 +25,14 @@ public class HeightManager extends VerticalLayout {
                 Notification.show("Height is required");
             }
             else if (heightsRadioButtonGroup.getValue() != null && !customHeight.getValue().isBlank()) {
-                this.scaffoldingHeight = Float.parseFloat(customHeight.getValue());
+                resultManager.setScaffoldingHeight(Float.parseFloat(customHeight.getValue()));
+                resultManager.calculateResult();
                 Notification.show("Height has been set!");
-                System.out.println("Height " + scaffoldingHeight);
-            }
-             else if (heightsRadioButtonGroup.getValue() == null){
-                this.scaffoldingHeight = Float.parseFloat(customHeight.getValue());
-                Notification.show("Height has been set!");
-                System.out.println("Height " + scaffoldingHeight);
 
             } else {
                 Notification.show("Height has been set!");
-                this.scaffoldingHeight = heightsRadioButtonGroup.getValue();
-                System.out.println("Height " + scaffoldingHeight);
+                resultManager.setScaffoldingHeight(heightsRadioButtonGroup.getValue());
+                resultManager.calculateResult();
 
             }
         });
