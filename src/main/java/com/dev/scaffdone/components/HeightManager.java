@@ -1,5 +1,6 @@
 package com.dev.scaffdone.components;
 
+import com.dev.scaffdone.core.scaffolding.model.Colors;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -13,34 +14,35 @@ import java.util.stream.IntStream;
 
 public class HeightManager extends VerticalLayout {
 
-
-    public HeightManager(ResultManager resultManager) {
-        RadioButtonGroup<Integer> heightsRadioButtonGroup = createHeightsRadioButtonGroup();
+    public HeightManager(CalculationManager calculationManager) {
+        RadioButtonGroup<Integer> heights = createHeightsRadioButton();
         TextField customHeight = new TextField("Custom Height");
         Button setHeightButton = createSetHeightButton();
 
         setHeightButton.addClickListener(event ->
         {
-            if (heightsRadioButtonGroup.getValue() == null && customHeight.getValue().isBlank()) {
+            if (heights.getValue() == null && customHeight.getValue().isBlank()) {
                 Notification.show("Height is required");
-            }
-            else if (heightsRadioButtonGroup.getValue() != null && !customHeight.getValue().isBlank()) {
-                resultManager.setScaffoldingHeight(Float.parseFloat(customHeight.getValue()));
-                resultManager.calculateResult();
+            } else if (heights.getValue() != null && !customHeight.getValue().isBlank()) {
+                calculationManager.setScaffoldingHeight(Float.parseFloat(customHeight.getValue()));
+                calculationManager.calculateResult();
                 Notification.show("Height has been set!");
 
             } else {
                 Notification.show("Height has been set!");
-                resultManager.setScaffoldingHeight(heightsRadioButtonGroup.getValue());
-                resultManager.calculateResult();
+                calculationManager.setScaffoldingHeight(heights.getValue());
+                calculationManager.calculateResult();
 
             }
         });
+        HorizontalLayout layout = createHorizontal(customHeight, setHeightButton);
+        add(heights, layout);
+    }
 
-
-        HorizontalLayout layout = new HorizontalLayout(customHeight,setHeightButton);
+    private static HorizontalLayout createHorizontal(TextField customHeight, Button setHeightButton) {
+        HorizontalLayout layout = new HorizontalLayout(customHeight, setHeightButton);
         customHeight.addClassName("home-view-text-field-1");
-        add(heightsRadioButtonGroup,layout);
+        return layout;
     }
 
     private static Button createSetHeightButton() {
@@ -51,19 +53,19 @@ public class HeightManager extends VerticalLayout {
     }
 
     private static void setGreenColorButton(Button setHeightButton) {
-        setHeightButton.getStyle().set("background-color", "#4e8752");
+        setHeightButton.getStyle().set("background-color", Colors.GREEN_COLOR.getHexCode());
         setHeightButton.getStyle().set("margin-top", "37px");
         setHeightButton.getStyle().set("color", "white");
     }
 
-    private RadioButtonGroup <Integer> createHeightsRadioButtonGroup() {
-        RadioButtonGroup<Integer> radioButtonGroup = new RadioButtonGroup<>();
-        radioButtonGroup.setLabel("Height");
-        radioButtonGroup.setItems(
+    private RadioButtonGroup<Integer> createHeightsRadioButton() {
+        RadioButtonGroup<Integer> heights = new RadioButtonGroup<>();
+        heights.setLabel("Height");
+        heights.setItems(
                 initHeights()
         );
-        radioButtonGroup.setValue(1);
-        return radioButtonGroup;
+        heights.setValue(1);
+        return heights;
     }
 
     private static List<Integer> initHeights() {

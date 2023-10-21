@@ -26,32 +26,40 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
         this.service = service;
         ScaffoldGrid grid = new ScaffoldGrid();
         initExampleData(grid);
-        H1 header = new H1("Scaffolding Done");
-        header.addClassName("home-view-h1-1");
-        VerticalLayout title = new VerticalLayout(header);
+        VerticalLayout title = createHeader();
+        CalculationManager calculationManager = createCalculationManager();
 
-        ResultManager resultManager = new ResultManager();
-        resultManager.getStyle().set("margin-left", "950px");
-        UserSelectionManager userSelectionManager = new UserSelectionManager(this.service);
-        DimensionQuantityManager dimensionQuantityManager = new DimensionQuantityManager(resultManager);
-        OtherLengthManager otherLengthManager = new OtherLengthManager(resultManager);
-        HeightManager heightManager = new HeightManager(resultManager);
-
-
+        HorizontalLayout layout = createHorizontalLayout(calculationManager);
         add(
                 title,
                 grid,
-                new HorizontalLayout(
-                        userSelectionManager,
-                        dimensionQuantityManager,
-                        otherLengthManager,
-                        heightManager),
-                new HorizontalLayout(
-                        new OtherInformationManager()
-                        ,resultManager
+                layout,
+                new HorizontalLayout(new AdditionalInfoManager(), calculationManager));
+    }
 
+    private static CalculationManager createCalculationManager() {
+        CalculationManager calculationManager = new CalculationManager();
+        calculationManager.addClassName("home-view-horizontal-layout-1");
+        return calculationManager;
+    }
 
-        ));
+    private static VerticalLayout createHeader() {
+        H1 header = new H1("Scaffolding Done");
+        header.addClassName("home-view-h1-1");
+        return new VerticalLayout(header);
+    }
+
+    private HorizontalLayout createHorizontalLayout(CalculationManager calculationManager) {
+        UserSelectionManager userSelectionManager = new UserSelectionManager(this.service);
+        ModulesManager modulesManager = new ModulesManager(calculationManager);
+        LengthManager lengthManager = new LengthManager(calculationManager);
+        HeightManager heightManager = new HeightManager(calculationManager);
+
+        return new HorizontalLayout(
+                userSelectionManager,
+                modulesManager,
+                lengthManager,
+                heightManager);
     }
 
     private void initExampleData(ScaffoldGrid grid) {
@@ -59,23 +67,5 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
                 service.getScaffolds()
         );
     }
-
-    private static HorizontalLayout calculation() {
-        TextField sizeTextField = new TextField("Enter size");
-        TextField sizeLabel = new TextField("Current size is: ");
-        sizeTextField.addValueChangeListener(event -> {
-            String currentSize = sizeTextField.getValue(); // Blokujemy strumień, aby uzyskać aktualną wartość
-            VaadinSession.getCurrent().lock(); // Blokujemy sesję przed modyfikacją interfejsu użytkownika
-            sizeLabel.setValue(currentSize);
-            VaadinSession.getCurrent().unlock(); // Odblokowujemy sesję
-        });
-
-        return new HorizontalLayout(sizeTextField, sizeLabel);
-    }
-
-    private static Flux<Long> getData(Float currentCalculation) {
-        return Flux.interval(Duration.ofMillis(50)).map(sequence -> currentCalculation.longValue());
-    }
-
 
 }

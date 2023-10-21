@@ -25,7 +25,7 @@ public class Scaffolding {
     private List<ScaffoldingModule> modules;
     private boolean done;
     private float height;
-    private Dimension frameDim;
+    private Dimensions frameDim;
     private String username;
     private float totalLength;
     private float resultSquareMeters;

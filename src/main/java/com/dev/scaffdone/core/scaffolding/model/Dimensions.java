@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Getter
-public enum Dimension {
+public enum Dimensions {
 
 
     SIZE_073(0.73f), SIZE_109(1.09f), SIZE_157(1.57f),
@@ -20,12 +20,12 @@ public enum Dimension {
 
     private final float size;
 
-    Dimension(float size) {
+    Dimensions(float size) {
         this.size = size;
     }
 
-    public static List<Dimension> getSizes() {
-        return Arrays.asList(Dimension.values());
+    public static List<Dimensions> getSizes() {
+        return Arrays.asList(Dimensions.values());
     }
 
 }

@@ -46,44 +46,30 @@ vaadin-button.home-view-button-1 { background-color:rgba(29,62,105,0.05); }
 
 vaadin-combo-box.home-view-combo-box-1::part(input-field) { background-color:rgba(102,143,94,0.32); }
 
+vaadin-grid {
+  border-radius:10px;
+  border:2px solid black;
+  overflow:hidden;
+}
+
+vaadin-grid::part(cell) {}
+
+vaadin-grid::part(header-cell) {
+  background-color:#4e8752;
+  color:white;
+}
+
+vaadin-grid::part(header-cell) {}
+
+vaadin-horizontal-layout.home-view-horizontal-layout-1 {
+
+
+}
+
+vaadin-radio-group>label { color:rgba(27,43,65,0.69); }
+
 vaadin-text-field.home-view-text-field-1::part(input-field) { background-color:rgba(102,143,94,0.32); }
 
-vaadin-vertical-layout.home-view-h1-1 {
+vaadin-vertical-layout.home-view-h1-1 {}
 
-
-/*background * vaadin-vertical-layout.home-view-h1-1 {
-               background-image: url("background.jpg");
-               }*/
-}
-vaadin-grid::part(header-cell){
-background-color:#4e8752;
-color: white;
-}
-
-
-vaadin-vertical-layout.home-view-vertical-layout-1 {
-
-}
-
-vaadin-grid{
- border-radius: 10px; /* Adjust the value to your liking */
-    overflow: hidden; /* To make sure the inner parts respect the rounded corners */
-    border: 2px solid black;
-}
-
-vaadin-grid::part(header-cell){
-
-
-}
-
-vaadin-grid::part(cell){
-
-}
-
-
-vaadin-radio-group > label{
-color:rgba(27, 43, 65, 0.69)
-}
-
-
-
+vaadin-vertical-layout.home-view-vertical-layout-1 {}

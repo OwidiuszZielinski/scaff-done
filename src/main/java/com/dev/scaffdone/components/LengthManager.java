@@ -1,5 +1,6 @@
 package com.dev.scaffdone.components;
 
+import com.dev.scaffdone.core.scaffolding.model.Colors;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.component.notification.Notification;
@@ -12,37 +13,40 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OtherLengthManager extends VerticalLayout {
+public class LengthManager extends VerticalLayout {
 
-    private float otherLength;
+    private float currentLength;
 
-    public OtherLengthManager(ResultManager resultManager) {
+    public LengthManager(CalculationManager calculationManager) {
         CheckboxGroup<String> framesCheckBox = createFramesCheckBox();
         Button setLength = createButton();
-        TextField customLength = new TextField("Custom Length");
-        HorizontalLayout hLayout = new HorizontalLayout();
-        customLength.addClassName("home-view-text-field-1");
-
+        TextField customLength = createCustomLength();
+        HorizontalLayout layout = new HorizontalLayout(customLength,setLength);
 
         setLength.addClickListener(e -> {
             if (!customLength.isEmpty()) {
-                this.otherLength = Float.parseFloat(customLength.getValue());
-                resultManager.addOtherLength(otherLength);
-                System.out.println(otherLength);
+                this.currentLength = Float.parseFloat(customLength.getValue());
+                calculationManager.addOtherLength(roundLength());
+                System.out.println(currentLength);
                 Notification.show("The frame size has been set!");
             } else {
-                this.otherLength = getValueFromCheckBox(framesCheckBox);
-                System.out.println(otherLength);
-                resultManager.addOtherLength(otherLength);
+                this.currentLength = getValueFromCheckBox(framesCheckBox);
+                System.out.println(currentLength);
+                calculationManager.addOtherLength(roundLength());
                 Notification.show("The frame size has been set!");
             }
         });
-        hLayout.add(customLength, setLength);
-        add(framesCheckBox, hLayout);
+        add(framesCheckBox, layout);
+    }
+
+    private static TextField createCustomLength() {
+        TextField customLength = new TextField("Custom Length");
+        customLength.addClassName("home-view-text-field-1");
+        return customLength;
     }
 
     private static Button createButton() {
-        Button addFramesLength = new Button("SET OTHER LENGTH");
+        Button addFramesLength = new Button("ADD LENGTH");
         addFramesLength.getStyle().set("top", "33px");
         setGreenTheme(addFramesLength);
         return addFramesLength;
@@ -58,17 +62,14 @@ public class OtherLengthManager extends VerticalLayout {
 
     private static void setGreenTheme(Button setFrames) {
         setFrames.setWidth("190px");
-        setFrames.getStyle().set("background-color", "#4e8752");
+        setFrames.getStyle().set("background-color", Colors.GREEN_COLOR.getHexCode());
         setFrames.getStyle().set("color", "white");
-
     }
 
     private static CheckboxGroup<String> createFramesCheckBox() {
         CheckboxGroup<String> checkboxGroup = new CheckboxGroup<>();
         checkboxGroup.setLabel("Frame Size");
         checkboxGroup.setItems(initSizes());
-        // Create a custom ItemLabelGenerator
-
         checkboxGroup.setItemLabelGenerator(item -> {
             String description = getDescriptionForItem(item);
             return item + " [ cm ] - " + description;
@@ -86,6 +87,9 @@ public class OtherLengthManager extends VerticalLayout {
         itemDescriptions.put("10", "Two frames length");
         itemDescriptions.put("15", "Three frames length");
         return itemDescriptions.getOrDefault(item, "No description available");
+    }
+    private float roundLength(){
+        return (float) (Math.round(currentLength * 100.0) / 100.0);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.dev.scaffdone.core.scaffolding;
 
 import com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO;
-import com.dev.scaffdone.core.scaffolding.model.Dimension;
+import com.dev.scaffdone.core.scaffolding.model.Dimensions;
 import com.dev.scaffdone.core.scaffolding.model.Scaffolding;
 import com.dev.scaffdone.core.scaffolding.model.ScaffoldingModule;
 import org.springframework.stereotype.Service;
@@ -53,12 +53,12 @@ public class ScaffoldingService {
     }
 
     public void initTestData() {
-        Scaffolding owi = Scaffolding.builder().modules(List.of(new ScaffoldingModule(Dimension.SIZE_073.getSize(), 5)))
+        Scaffolding owi = Scaffolding.builder().modules(List.of(new ScaffoldingModule(Dimensions.SIZE_073.getSize(), 5)))
                 .done(true)
                 .otherInformation("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
                 .username("Lukasz").height(10.0f).build();
 
-        Scaffolding owi2 = Scaffolding.builder().modules(List.of(new ScaffoldingModule(Dimension.SIZE_073.getSize(), 5)))
+        Scaffolding owi2 = Scaffolding.builder().modules(List.of(new ScaffoldingModule(Dimensions.SIZE_073.getSize(), 5)))
                 .done(true)
                 .otherInformation("21JEDSAIODKJASKLDJSAKLDJASdasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddKLDJKLSAJDSADJALSDK")
                 .username("Tomek").height(10.0f).build();
