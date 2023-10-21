@@ -1,7 +1,5 @@
 package com.dev.scaffdone;
 
-import com.dev.scaffdone.HomeView;
-import com.dev.scaffdone.LoginView;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;

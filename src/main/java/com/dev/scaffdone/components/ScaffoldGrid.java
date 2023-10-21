@@ -1,6 +1,5 @@
 package com.dev.scaffdone.components;
 
-import com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO;
 import com.dev.scaffdone.core.scaffolding.model.Colors;
 import com.dev.scaffdone.core.scaffolding.model.Scaffolding;
 import com.vaadin.flow.component.button.Button;
