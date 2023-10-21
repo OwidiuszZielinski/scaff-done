@@ -55,6 +55,10 @@ public class CalculationManager extends HorizontalLayout {
         this.currentHeight.setValue(hei + " [ m ]");
     }
 
+    public float getSquareMeters(){
+        return (float) (Math.round(this.scaffoldingLength * this.scaffoldingHeight * 100.0) / 100.0);
+
+    }
     public void calculateResult() {
         float result = (float) (Math.round(this.scaffoldingLength * this.scaffoldingHeight * 100.0) / 100.0);
         this.squareMeters.setValue(result + " [ m2 ]");

@@ -23,23 +23,12 @@ public class ScaffoldingService {
             throw new IllegalArgumentException("Scaffolding must have dimensions");
         }
         scaffoldingDTO.setDone(true);
-        scaffoldingDTO.setTotalLength(calculateLength(scaffoldingDTO.getModules()));
-        scaffoldingDTO.setResultSquareMeters(calculateSquareMeters(
-                scaffoldingDTO.getTotalLength(),scaffoldingDTO.getHeight()
-        ));
         Scaffolding newScaffolding = new Scaffolding();
         newScaffolding.fromDTO(scaffoldingDTO);
         scaffoldingDataRepository.save(newScaffolding);
         return scaffoldingDTO;
     }
 
-    private float calculateSquareMeters(float totalLength, float height) {
-        return totalLength * height;
-    }
-
-    public static float calculateLength(List<ScaffoldingModule> sizes) {
-        return sizes.stream().map(e -> e.getDimension() * e.getQuantity()).reduce(0f, Float::sum);
-    }
 
     public List<String> getUsedUsers(){
         return scaffoldingDataRepository.findAll().stream()
