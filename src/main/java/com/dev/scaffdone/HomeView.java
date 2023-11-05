@@ -14,9 +14,9 @@ import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.servlet.annotation.WebServlet;
 
-@Route("main")
-@RolesAllowed({ "ADMIN", "USER" })
+@Route("/main")
 @Theme("scaff-done")
 public class HomeView extends VerticalLayout implements AppShellConfigurator {
     private final ScaffoldingService service;
@@ -101,7 +101,6 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
                 .username(userSelectionManager.getUserName())
                 .totalLength(calculationManager.getScaffoldingLength())
                 .resultSquareMeters(calculationManager.getSquareMeters())
-                .userDetails(null)
                 .otherInformation(additionalInfoManager.getAdditionalInfo())
                 .build();
     }

@@ -1,7 +1,6 @@
 package com.dev.scaffdone.core.scaffolding.model;
 
 
-import com.dev.scaffdone.core.user.UserDetails;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -29,8 +28,6 @@ public class Scaffolding {
     private String username;
     private float totalLength;
     private float resultSquareMeters;
-    @ManyToOne
-    private UserDetails userDetails;
     private String otherInformation;
 
     public void fromDTO(com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO scaffoldingDTO){
@@ -41,7 +38,7 @@ public class Scaffolding {
         this.username = scaffoldingDTO.getUsername();
         this.totalLength = scaffoldingDTO.getTotalLength();
         this.resultSquareMeters = scaffoldingDTO.getResultSquareMeters();
-        this.userDetails = scaffoldingDTO.getUserDetails();
+
         this.otherInformation = scaffoldingDTO.getOtherInformation();
 
     }
