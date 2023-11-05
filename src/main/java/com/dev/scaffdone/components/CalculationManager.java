@@ -18,20 +18,19 @@ public class CalculationManager extends HorizontalLayout {
     private TextArea squareMeters = new TextArea("Square meters");
 
     public CalculationManager() {
-        Button save = createButton("SAVE CALCULATION");
         setFieldsReadOnly();
         setFieldsSize();
         setSpacing(false);
-        justifyElements(save);
-        add(currentLength, currentHeight, squareMeters,save);
+        justifyElements();
+        add(currentLength, currentHeight, squareMeters);
     }
 
-    private void justifyElements(Button saveToDatabase) {
+    private void justifyElements() {
         currentLength.getStyle().set("margin-left","620px");
         currentLength.getStyle().set("margin-right","20px");
         squareMeters.getStyle().set("margin-left","40px");
         currentHeight.getStyle().set("margin-right","20px");
-        saveToDatabase.getStyle().set("margin-left","22px");
+
     }
 
     private static Button createButton(String text) {

@@ -4,8 +4,9 @@ package com.dev.scaffdone;
 import com.dev.scaffdone.components.*;
 import com.dev.scaffdone.core.scaffolding.ScaffoldingService;
 import com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO;
+import com.dev.scaffdone.core.scaffolding.model.Colors;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.JavaScript;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -19,38 +20,57 @@ import jakarta.annotation.security.RolesAllowed;
 @Theme("scaff-done")
 public class HomeView extends VerticalLayout implements AppShellConfigurator {
     private final ScaffoldingService service;
+    private final CalculationManager calculationManager;
 
     public HomeView(ScaffoldingService service) {
         this.service = service;
-        ScaffoldGrid grid = new ScaffoldGrid();
-        CalculationManager calculationManager = createCalculationManager();
-        UserSelectionManager userSelectionManager = new UserSelectionManager(this.service);
+        this.calculationManager = createCalculationManager();
+        ScaffoldGrid grid = createGrid();
+        UserSelectionManager userSelectionManager = new UserSelectionManager(service);
         ModulesManager modulesManager = new ModulesManager(calculationManager);
         LengthManager lengthManager = new LengthManager(calculationManager);
         HeightManager heightManager = new HeightManager(calculationManager);
         AdditionalInfoManager additionalInfoManager = new AdditionalInfoManager();
-        initExampleData(grid);
-        VerticalLayout title = createHeader();
-        Button button = new Button("TEST SAVE");
-        button.addClickListener(e->{
-           save(buildScaffoldingDTO(
-                   modulesManager,
-                   calculationManager,
-                   userSelectionManager,
-                   additionalInfoManager
-           ));
-            initExampleData(grid);
+
+        Button save = createButton("SAVE CALCULATION");
+        save.getStyle().set("margin-left", "6px");
+        save.addClickListener(e -> {
+            save(buildScaffoldingDTO(
+                    modulesManager,
+                    calculationManager,
+                    userSelectionManager,
+                    additionalInfoManager
+            ));
+            getCalculations(grid);
         });
         add(
-                title,
+                createHeader(),
                 grid,
                 new HorizontalLayout(
-                userSelectionManager,
-                modulesManager,
-                lengthManager,
-                heightManager),
-                new HorizontalLayout(additionalInfoManager, calculationManager)
-        ,button);
+                        userSelectionManager,
+                        modulesManager,
+                        lengthManager,
+                        heightManager),
+                new HorizontalLayout(additionalInfoManager, calculationManager, save));
+    }
+
+    private ScaffoldGrid createGrid() {
+        ScaffoldGrid grid = new ScaffoldGrid();
+        getCalculations(grid);
+        return grid;
+    }
+
+    private static Button createButton(String text) {
+        Button save = new Button(text);
+        setGreenButton(save);
+        return save;
+    }
+
+    private static void setGreenButton(Button button) {
+        button.getStyle().set("background-color", Colors.GREEN_COLOR.getHexCode());
+        button.getStyle().set("color", "white");
+        button.setWidth("190px");
+        button.getStyle().set("top", "40px");
     }
 
     private static CalculationManager createCalculationManager() {
@@ -66,14 +86,14 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
     }
 
 
-    private void initExampleData(ScaffoldGrid grid) {
+    private void getCalculations(ScaffoldGrid grid) {
         grid.setItems(
                 service.getScaffolds()
         );
     }
 
     private ScaffoldingDTO buildScaffoldingDTO(ModulesManager modulesManager, CalculationManager calculationManager,
-                                               UserSelectionManager userSelectionManager, AdditionalInfoManager additionalInfoManager){
+                                               UserSelectionManager userSelectionManager, AdditionalInfoManager additionalInfoManager) {
         return ScaffoldingDTO.builder()
                 .modules(modulesManager.getScaffoldingModules())
                 .done(true)
@@ -85,6 +105,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
                 .otherInformation(additionalInfoManager.getAdditionalInfo())
                 .build();
     }
+
     private void save(ScaffoldingDTO scaffoldingDTO) {
         service.add(scaffoldingDTO);
     }
