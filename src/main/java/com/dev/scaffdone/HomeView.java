@@ -11,13 +11,14 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.Theme;
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import reactor.core.publisher.Flux;
 
 import java.time.Duration;
 
 @Route("main")
-@RolesAllowed({ "ADMIN", "USER" })
+@PermitAll
 @Theme("scaff-done")
 public class HomeView extends VerticalLayout implements AppShellConfigurator {
     private final ScaffoldingService service;
