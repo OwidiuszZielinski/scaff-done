@@ -118,7 +118,6 @@ public class ScaffoldGrid extends Grid<Scaffolding> {
         addColumn(Scaffolding::getId).setHeader("Id");
         addColumn(Scaffolding::getUsername).setHeader("User");
         addColumn(Scaffolding::getModules).setHeader("Modules");
-        addColumn(Scaffolding::getFrameDim).setHeader("Frames");
         addColumn(Scaffolding::getHeight).setHeader("Height");
         addColumn(Scaffolding::getTotalLength).setHeader("Total Length");
         addColumn(Scaffolding::getResultSquareMeters).setHeader("Square Meters");

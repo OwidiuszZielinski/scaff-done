@@ -7,12 +7,14 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
 public class LengthManager extends VerticalLayout {
 
     private float currentLength;
@@ -25,15 +27,15 @@ public class LengthManager extends VerticalLayout {
 
         setLength.addClickListener(e -> {
             if (!customLength.isEmpty()) {
-                this.currentLength = Float.parseFloat(customLength.getValue());
+                currentLength = Float.parseFloat(customLength.getValue());
                 calculationManager.addOtherLength(roundLength());
                 System.out.println(currentLength);
                 Notification.show("The frame size has been set!");
             } else {
-                this.currentLength = getValueFromCheckBox(framesCheckBox);
+                currentLength = getValueFromCheckBox(framesCheckBox);
                 System.out.println(currentLength);
                 calculationManager.addOtherLength(roundLength());
-                Notification.show("The frame size has been set!");
+                Notification.show("The size has been set!");
             }
         });
         add(framesCheckBox, layout);

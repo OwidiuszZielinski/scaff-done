@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 
 public class HeightManager extends VerticalLayout {
 
+
     public HeightManager(CalculationManager calculationManager) {
         RadioButtonGroup<Integer> heights = createHeightsRadioButton();
         TextField customHeight = new TextField("Custom Height");

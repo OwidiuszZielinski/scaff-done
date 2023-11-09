@@ -25,7 +25,6 @@ public class Scaffolding {
     private List<ScaffoldingModule> modules;
     private boolean done;
     private float height;
-    private Dimensions frameDim;
     private String username;
     private float totalLength;
     private float resultSquareMeters;
@@ -37,7 +36,6 @@ public class Scaffolding {
         this.modules = scaffoldingDTO.getModules();
         this.done = scaffoldingDTO.isDone();
         this.height = scaffoldingDTO.getHeight();
-        this.frameDim = scaffoldingDTO.getFrameDim();
         this.username = scaffoldingDTO.getUsername();
         this.totalLength = scaffoldingDTO.getTotalLength();
         this.resultSquareMeters = scaffoldingDTO.getResultSquareMeters();

@@ -17,7 +17,6 @@ public class ScaffoldingDTO {
     private List<ScaffoldingModule> modules;
     private boolean done;
     private float height;
-    private Dimensions frameDim;
     private String username;
     private float totalLength;
     private float resultSquareMeters;
@@ -30,7 +29,6 @@ public class ScaffoldingDTO {
                 .modules(scaffolding.getModules())
                 .done(scaffolding.isDone())
                 .height(scaffolding.getHeight())
-                .frameDim(scaffolding.getFrameDim())
                 .username(scaffolding.getUsername())
                 .totalLength(scaffolding.getTotalLength())
                 .resultSquareMeters(scaffolding.getResultSquareMeters())
