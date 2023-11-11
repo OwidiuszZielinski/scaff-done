@@ -88,10 +88,14 @@ public class RegisterView extends Composite {
         } else if (userService.loadUserByEmail(email) != null) {
             Notification.show("Email is already taken. Please use a different one.");
         } else {
-            userService.register(username, email, password);
+            userService.register(username, email, passwordEncode(password));
             Notification.show("Registration succeeded");
         }
     }
 
-
+    private String passwordEncode(String password) {
+        String encode = securityService.passwordEncoder().encode(password);
+        System.out.println(encode);
+        return encode;
+    }
 }
