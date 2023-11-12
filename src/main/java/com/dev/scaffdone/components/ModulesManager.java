@@ -74,7 +74,7 @@ public class ModulesManager extends VerticalLayout {
             }
             this.scaffoldingModules.add(new ScaffoldingModule(
                     Float.parseFloat(dimensions.getValue()),
-                    Integer.parseInt(customQuantity.getValue())));
+                    values.getValue()));
 
             calculationManager.setScaffoldingLength(calculateTotalLengthFromModule());
             Notification.show("Added!");
