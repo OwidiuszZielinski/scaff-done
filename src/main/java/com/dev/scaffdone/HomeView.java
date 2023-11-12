@@ -10,7 +10,6 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.AppShellConfigurator;
-import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import jakarta.annotation.security.PermitAll;
@@ -18,6 +17,7 @@ import jakarta.annotation.security.PermitAll;
 @Route("main")
 @PermitAll
 @Theme("scaff-done")
+
 public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
     private final SecurityService securityService;
@@ -28,24 +28,37 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
     private final ModulesManager modulesManager;
     private final AdditionalInfoManager additionalInfoManager;
 
+
+
+
+
     public HomeView(SecurityService securityService, ScaffoldingService service) {
         this.securityService = securityService;
         this.service = service;
-        grid = new ScaffoldGrid();
-        initExampleData(grid);
-        VerticalLayout title = createHeader();
+        grid = createGrid();
+        HorizontalLayout title = createHeader();
         calculationManager = createCalculationManager();
+
         userSelectionManager = new UserSelectionManager(this.service);
         modulesManager = new ModulesManager(calculationManager);
         LengthManager lengthManager = new LengthManager(calculationManager);
         HeightManager heightManager = new HeightManager(calculationManager);
         additionalInfoManager = new AdditionalInfoManager();
+        calculationManager.getSave().addClickListener(event -> saveScaffolding());
+
 
         HorizontalLayout layout = new HorizontalLayout(
                 userSelectionManager, modulesManager, lengthManager, heightManager);
 
-        calculationManager.getSave().addClickListener(event -> saveScaffolding());
-        add(title, grid, layout, new HorizontalLayout(additionalInfoManager, calculationManager));
+        add(title, grid, layout,
+                new HorizontalLayout(additionalInfoManager, calculationManager));
+    }
+
+    private ScaffoldGrid createGrid() {
+        final ScaffoldGrid grid;
+        grid = new ScaffoldGrid();
+        initExampleData(grid);
+        return grid;
     }
 
     private CalculationManager createCalculationManager() {
@@ -64,20 +77,28 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
                 .height(calculationManager.getScaffoldingHeight())
                 .otherInformation(additionalInfoManager.getAdditionalInfo())
                 .build();
-
         service.add(scaffoldingDTO);
         grid.setItems(service.getScaffolds());
     }
 
-    private  VerticalLayout createHeader() {
+    private  HorizontalLayout createHeader() {
         H1 header = new H1("Scaffolding Done");
+        header.setWidth("600px");
         header.addClassName("home-view-h1-1");
-        Button logout = new Button("Logout");
+        HorizontalLayout layout = new HorizontalLayout(header);
+        layout.setSizeFull();
+        GreenButton logout = new GreenButton("Logout");
+        HorizontalLayout buLay = new HorizontalLayout(logout);
+        buLay.setSizeFull();
+        buLay.setJustifyContentMode(JustifyContentMode.END);
+        layout.add(buLay);
+
+
         logout.addClickListener(event->{
             securityService.logout();
 
         });
-        return new VerticalLayout(header);
+        return layout;
     }
 
     private void initExampleData(ScaffoldGrid grid) {
@@ -85,5 +106,6 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
                 service.getScaffolds()
         );
     }
+
 
 }

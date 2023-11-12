@@ -16,12 +16,14 @@
 h1.home-view-h1-1 {
   -webkit-text-stroke:1px #34495e;
   animation:pulse 1.5s infinite alternate;
+  border-radius:0;
+  border-width:0px;
   color:#2C3E50;
   font-family:'Poppins',sans-serif;
-  font-size:2.5em;
-  font-weight:600;
+  font-size:var(--lumo-font-size-xxxl);
   letter-spacing:-1px;
   margin-bottom:20px;
+  padding:var(--lumo-space-xs);
   position:relative;
   text-shadow:3px 3px 10px rgba(0,0,0,0.2);
   text-stroke:1px #34495e;
@@ -42,7 +44,11 @@ h1.home-view-h1-1::before {
   z-index:-1;
 }
 
-vaadin-button.home-view-button-1 { background-color:rgba(29,62,105,0.05); }
+vaadin-button.home-view-button-1 {
+  background-color:rgba(29,62,105,0.05);
+  border-width:0px;
+  padding-inline:var(--lumo-space-xs);
+}
 
 vaadin-combo-box.home-view-combo-box-1::part(input-field) { background-color:rgba(102,143,94,0.32); }
 
@@ -62,8 +68,10 @@ vaadin-grid::part(header-cell) {
 vaadin-grid::part(header-cell) {}
 
 vaadin-horizontal-layout.home-view-horizontal-layout-1 {
-
-
+  border-radius:0;
+  border-width:0px;
+  gap:var(--lumo-space-xs);
+  padding:var(--lumo-space-xs);
 }
 
 vaadin-radio-group>label { color:rgba(27,43,65,0.69); }
