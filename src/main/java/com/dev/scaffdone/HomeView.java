@@ -9,6 +9,7 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.AppShellConfigurator;
+import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import jakarta.annotation.security.PermitAll;
@@ -60,7 +61,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
     private ScaffoldGrid createGrid() {
         final ScaffoldGrid grid;
-        grid = new ScaffoldGrid();
+        grid = new ScaffoldGrid(service);
         initExampleData(grid);
         return grid;
     }
@@ -68,7 +69,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
     private CalculationManager createCalculationManager() {
         final CalculationManager calculationManager;
         calculationManager = new CalculationManager();
-        calculationManager.addClassName("home-view-horizontal-layout-1");
+        calculationManager.getStyle().set("margin-top","1px");
         return calculationManager;
     }
 

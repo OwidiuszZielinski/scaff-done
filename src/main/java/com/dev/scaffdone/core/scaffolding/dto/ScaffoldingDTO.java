@@ -1,12 +1,14 @@
 package com.dev.scaffdone.core.scaffolding.dto;
 
-import com.dev.scaffdone.core.scaffolding.model.Dimensions;
 import com.dev.scaffdone.core.scaffolding.model.Scaffolding;
 import com.dev.scaffdone.core.scaffolding.model.ScaffoldingModule;
 import com.dev.scaffdone.core.user.User;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Builder
@@ -14,6 +16,7 @@ import java.util.List;
 public class ScaffoldingDTO {
 
     private Long id;
+    private String date;
     private List<ScaffoldingModule> modules;
     private boolean done;
     private float height;
@@ -24,8 +27,9 @@ public class ScaffoldingDTO {
     private String otherInformation;
 
     public static ScaffoldingDTO from(Scaffolding scaffolding){
-        return com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO.builder()
+        return ScaffoldingDTO.builder()
                 .id(scaffolding.getId())
+                .date(scaffolding.getDate())
                 .modules(scaffolding.getModules())
                 .done(scaffolding.isDone())
                 .height(scaffolding.getHeight())

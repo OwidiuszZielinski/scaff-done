@@ -7,6 +7,10 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Builder
@@ -20,6 +24,7 @@ public class Scaffolding {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private LocalDateTime date;
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "JSON")
     private List<ScaffoldingModule> modules;
@@ -33,6 +38,7 @@ public class Scaffolding {
     private String otherInformation;
 
     public void fromDTO(com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO scaffoldingDTO){
+        this.date = LocalDateTime.parse(scaffoldingDTO.getDate());
         this.modules = scaffoldingDTO.getModules();
         this.done = scaffoldingDTO.isDone();
         this.height = scaffoldingDTO.getHeight();
@@ -42,6 +48,11 @@ public class Scaffolding {
         this.user = scaffoldingDTO.getUser();
         this.otherInformation = scaffoldingDTO.getOtherInformation();
 
+    }
+
+    public String getDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        return date.format(formatter);
     }
 }
 

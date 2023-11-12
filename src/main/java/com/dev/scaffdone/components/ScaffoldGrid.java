@@ -1,5 +1,6 @@
 package com.dev.scaffdone.components;
 
+import com.dev.scaffdone.core.scaffolding.ScaffoldingService;
 import com.dev.scaffdone.core.scaffolding.model.Colors;
 import com.dev.scaffdone.core.scaffolding.model.Scaffolding;
 import com.vaadin.flow.component.button.Button;
@@ -10,13 +11,21 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.data.provider.SortDirection;
+import lombok.RequiredArgsConstructor;
+
+import java.util.NoSuchElementException;
+
 
 public class ScaffoldGrid extends Grid<Scaffolding> {
-    public ScaffoldGrid() {
 
+    private final ScaffoldingService scaffoldingService;
+
+    public ScaffoldGrid(ScaffoldingService scaffoldingService) {
+        this.scaffoldingService = scaffoldingService;
         initColumns();
-        addComponentColumn(ScaffoldGrid::createDoneButton).setHeader("Done");
-        addComponentColumn(ScaffoldGrid::createMoreButton).setHeader("Other Info");
+        addComponentColumn(this::createDoneButton).setHeader("Done");
+        addComponentColumn(ScaffoldGrid::createMoreButton).setHeader("More Info");
         addComponentColumn(item -> createDeleteButton());
     }
 
@@ -31,7 +40,7 @@ public class ScaffoldGrid extends Grid<Scaffolding> {
         return delete;
     }
 
-    private static Button createDoneButton(Scaffolding item) {
+    private Button createDoneButton(Scaffolding item) {
         Button doneButton = new Button("Done");
         doneButtonHandler(item, doneButton);
         doneButton.addClickListener(click -> {
@@ -72,10 +81,13 @@ public class ScaffoldGrid extends Grid<Scaffolding> {
     }
 
     private static VerticalLayout createLayoutWithTextArea(Scaffolding item) {
-        TextArea dialogTextArea = new TextArea("Other Information");
+        TextArea dialogTextArea = new TextArea("More");
+        TextArea modules = new TextArea("Modules List");
+        modules.setReadOnly(true);
+        modules.setValue(item.getModules().toString());
         dialogTextArea.setReadOnly(true);
         dialogTextArea.setValue(item.getOtherInformation());
-        VerticalLayout layout = new VerticalLayout(dialogTextArea);
+        VerticalLayout layout = new VerticalLayout(dialogTextArea, modules);
         layout.setAlignItems(FlexComponent.Alignment.STRETCH);
         return layout;
     }
@@ -101,24 +113,30 @@ public class ScaffoldGrid extends Grid<Scaffolding> {
         }
     }
 
-    private static void isDoneHandler(Scaffolding item, Button button) {
-        if (item.isDone()) {
-            item.setDone(false);
+    private void isDoneHandler(Scaffolding item, Button button) {
+        Scaffolding scaffolding = scaffoldingService.getScaffold(item.getId()).orElseThrow(
+                () -> new NoSuchElementException("Calculation not found"));
+        System.out.println(scaffolding);
+        if (scaffolding.isDone()) {
+            scaffolding.setDone(false);
             button.setText("NO");
             buttonRedStyle(button);
         } else {
             button.setText("YES");
-            item.setDone(true);
+            scaffolding.setDone(true);
             buttonGreenStyle(button);
         }
+        scaffoldingService.updateDone(scaffolding);
+        System.out.println("UPDATED" + scaffolding);
     }
 
     private void initColumns() {
-        addColumn(Scaffolding::getId).setHeader("Id");
-        addColumn(Scaffolding::getUsername).setHeader("User");
-        addColumn(Scaffolding::getModules).setHeader("Modules");
-        addColumn(Scaffolding::getHeight).setHeader("Height");
-        addColumn(Scaffolding::getTotalLength).setHeader("Total Length");
-        addColumn(Scaffolding::getResultSquareMeters).setHeader("Square Meters");
+        addColumn(Scaffolding::getId).setHeader("Id").setSortable(true).setWidth("50px");
+        addColumn(Scaffolding::getDate).setHeader("Date").setSortable(true).setWidth("150px");
+        addColumn(Scaffolding::getUsername).setHeader("User").setWidth("50px");
+        addColumn(Scaffolding::getModules).setHeader("Modules").setWidth("350px");
+        addColumn(Scaffolding::getHeight).setHeader("Height").setWidth("50px");
+        addColumn(Scaffolding::getTotalLength).setHeader("Total Length").setSortable(true).setWidth("50px");
+        addColumn(Scaffolding::getResultSquareMeters).setHeader("Square Meters").setSortable(true).setWidth("50px");
     }
 }
