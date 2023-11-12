@@ -1,6 +1,5 @@
 package com.dev.scaffdone.components;
 
-import com.dev.scaffdone.core.scaffolding.model.Colors;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.notification.Notification;
@@ -31,11 +30,9 @@ public class AdditionalInfoManager extends VerticalLayout {
         dialogLayout.setAlignItems(FlexComponent.Alignment.STRETCH);
         Dialog moreInfoDialog = new Dialog(dialogLayout);
         setStyleDialog(moreInfoDialog);
-
         Button close = closeHandler(moreInfoDialog);
         Button save = saveHandler(textInfo, moreInfoDialog);
-
-        setGreenStyleButton(save);
+        GreenButton.setGreenStyleButton(save);
         moreInfoDialog.getFooter().add(close, save);
         moreInfoDialog.open();
 
@@ -63,17 +60,11 @@ public class AdditionalInfoManager extends VerticalLayout {
         moreInfoDialog.close();
     }
 
-    private static Button createAddButton() {
-        Button add = new Button("ADD MORE INFO");
+    private static GreenButton createAddButton() {
+        GreenButton add = new GreenButton("ADD MORE INFO");
         add.setWidth("270px");
         add.getStyle().set("top", "25px");
-        setGreenStyleButton(add);
         return add;
-    }
-
-    private static void setGreenStyleButton(Button button) {
-        button.getStyle().set("background-color", Colors.GREEN_COLOR.getHexCode());
-        button.getStyle().set("color", "white");
     }
 
     private static void setStyleDialog(Dialog moreInfoDialog) {
