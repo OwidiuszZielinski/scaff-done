@@ -6,27 +6,60 @@ import com.dev.scaffdone.core.scaffolding.model.Scaffolding;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.HeaderRow;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.SortDirection;
+import com.vaadin.flow.data.value.ValueChangeMode;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.relational.core.sql.Not;
 
 import java.util.NoSuchElementException;
+import java.util.Set;
 
-
-public class ScaffoldGrid extends Grid<Scaffolding> {
+@Getter
+@Setter
+public class ScaffoldGrid extends VerticalLayout {
 
     private final ScaffoldingService scaffoldingService;
+    private final Grid<Scaffolding> grid = new Grid<>();
+
 
     public ScaffoldGrid(ScaffoldingService scaffoldingService) {
+
         this.scaffoldingService = scaffoldingService;
-        initColumns();
-        addComponentColumn(this::createDoneButton).setHeader("Done");
-        addComponentColumn(ScaffoldGrid::createMoreButton).setHeader("More Info");
-        addComponentColumn(item -> createDeleteButton());
+        initColumns(grid);
+        grid.addComponentColumn(this::createDoneButton).setHeader("Done");
+        grid.addComponentColumn(ScaffoldGrid::createMoreButton).setHeader("More Info");
+        grid.addComponentColumn(item -> createDeleteButton());
+        grid.setSelectionMode(Grid.SelectionMode.MULTI);
+        Button generatePdf = createGeneratePdfButton();
+
+        generatePdf.addClickListener(e->{
+            Set<Scaffolding> selectedItems = grid.getSelectedItems();
+            if(selectedItems.isEmpty()){
+                Notification.show("Please mark the items");
+            }else {
+                //DOPISZ LOGIKE NA PRZEKIEROWANIE NA STRONE Z PDFEM
+                System.out.println(selectedItems);
+            }
+        });
+        add(generatePdf, grid);
+
+    }
+
+    private Button createGeneratePdfButton() {
+        getStyle().set("margin-top","-40px");
+        Button generatePdf = new Button("GENERATE PDF");
+        GreenButton.setGreenStyleButton(generatePdf);
+        return generatePdf;
     }
 
     private static Button createDeleteButton() {
@@ -130,13 +163,13 @@ public class ScaffoldGrid extends Grid<Scaffolding> {
         System.out.println("UPDATED" + scaffolding);
     }
 
-    private void initColumns() {
-        addColumn(Scaffolding::getId).setHeader("Id").setSortable(true).setWidth("50px");
-        addColumn(Scaffolding::getDate).setHeader("Date").setSortable(true).setWidth("150px");
-        addColumn(Scaffolding::getUsername).setHeader("User").setWidth("50px");
-        addColumn(Scaffolding::getModules).setHeader("Modules").setWidth("350px");
-        addColumn(Scaffolding::getHeight).setHeader("Height").setWidth("50px");
-        addColumn(Scaffolding::getTotalLength).setHeader("Total Length").setSortable(true).setWidth("50px");
-        addColumn(Scaffolding::getResultSquareMeters).setHeader("Square Meters").setSortable(true).setWidth("50px");
+    private void initColumns(Grid<Scaffolding> grid) {
+        grid.addColumn(Scaffolding::getId).setHeader("Id").setSortable(true).setWidth("50px");
+        grid.addColumn(Scaffolding::getDate).setHeader("Date").setSortable(true).setWidth("150px");
+        grid.addColumn(Scaffolding::getUsername).setHeader("User").setWidth("50px");
+        grid.addColumn(Scaffolding::getModules).setHeader("Modules").setWidth("350px");
+        grid.addColumn(Scaffolding::getHeight).setHeader("Height").setWidth("50px");
+        grid.addColumn(Scaffolding::getTotalLength).setHeader("Total Length").setSortable(true).setWidth("70px");
+        grid.addColumn(Scaffolding::getResultSquareMeters).setHeader("Square Meters").setSortable(true).setWidth("100px");
     }
 }

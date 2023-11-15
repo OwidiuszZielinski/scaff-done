@@ -31,18 +31,13 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
     private final AdditionalInfoManager additionalInfoManager;
 
 
-
-
-
-
     public HomeView(SecurityService securityService, ScaffoldingService service) {
+        
         this.securityService = securityService;
         this.service = service;
-
         grid = createGrid();
         HorizontalLayout title = createHeader();
         calculationManager = createCalculationManager();
-
         userSelectionManager = new UserSelectionManager(this.service);
         modulesManager = new ModulesManager(calculationManager);
         LengthManager lengthManager = new LengthManager(calculationManager);
@@ -56,6 +51,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
         add(title, grid, layout,
                 new HorizontalLayout(additionalInfoManager, calculationManager));
+
 
     }
 
@@ -83,33 +79,41 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
                 .otherInformation(additionalInfoManager.getAdditionalInfo())
                 .build();
         service.add(scaffoldingDTO);
-        grid.setItems(service.getScaffolds());
+        grid.getGrid().setItems(service.getScaffolds());
     }
 
 
     private  HorizontalLayout createHeader() {
+        H1 header = createHeaderLayout();
+        HorizontalLayout layout = new HorizontalLayout(header);
+        layout.setSizeFull();
+        HorizontalLayout buttonLayout = createLogoutLayout();
+        layout.add(buttonLayout);
+        return layout;
+    }
+
+    private static H1 createHeaderLayout() {
         H1 header = new H1("Scaffolding Done");
         header.setWidth("600px");
         header.addClassName("home-view-h1-1");
-        HorizontalLayout layout = new HorizontalLayout(header);
-        layout.setSizeFull();
-        GreenButton logout = new GreenButton("Logout");
+        return header;
+    }
+
+    private HorizontalLayout createLogoutLayout() {
+        GreenButton logout = new GreenButton("LOGOUT");
+        logout.getStyle().set("margin-right","20px");
         HorizontalLayout buLay = new HorizontalLayout(logout);
         buLay.setSizeFull();
         buLay.setJustifyContentMode(JustifyContentMode.END);
-        layout.add(buLay);
-
-
         logout.addClickListener(event->{
             securityService.logout();
-
         });
-        return layout;
+        return buLay;
     }
 
     private void initExampleData(ScaffoldGrid grid) {
 
-        grid.setItems(
+        grid.getGrid().setItems(
                 service.getScaffolds()
         );
     }
