@@ -25,7 +25,7 @@ public class ScaffDoneApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         User save = repository.save(User.builder()
-                .email("owidiusz")
+                .email("example@example.com")
                 .password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW")
                 .roles(Set.of(Role.ADMIN))
                 .login("admin").build());
