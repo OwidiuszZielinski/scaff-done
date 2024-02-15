@@ -12,7 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AdditionalInfoManager extends VerticalLayout {
-
     private String additionalInfo;
     public AdditionalInfoManager() {
         Button addButton = createAddButton();
@@ -21,9 +20,7 @@ public class AdditionalInfoManager extends VerticalLayout {
             createDialog();
         });
         add(addButton);
-
     }
-
     private void createDialog() {
         TextArea textInfo = new TextArea("Additional information");
         VerticalLayout dialogLayout = new VerticalLayout(textInfo);
@@ -35,21 +32,17 @@ public class AdditionalInfoManager extends VerticalLayout {
         GreenButton.setGreenStyleButton(save);
         moreInfoDialog.getFooter().add(close, save);
         moreInfoDialog.open();
-
     }
-
     private Button saveHandler(TextArea textInfo, Dialog moreInfoDialog) {
         return new Button("Save", saveEvent -> {
             dialogTextHandler(textInfo, moreInfoDialog);
         });
     }
-
     private static Button closeHandler(Dialog moreInfoDialog) {
         return new Button("Close", clickEvent -> {
             moreInfoDialog.close();
         });
     }
-
     private void dialogTextHandler(TextArea textInfo, Dialog moreInfoDialog) {
         if (!textInfo.getValue().isEmpty()) {
             this.additionalInfo = textInfo.getValue();
@@ -59,14 +52,12 @@ public class AdditionalInfoManager extends VerticalLayout {
         }
         moreInfoDialog.close();
     }
-
     private static GreenButton createAddButton() {
         GreenButton add = new GreenButton("ADD MORE INFO");
         add.setWidth("270px");
         add.getStyle().set("top", "25px");
         return add;
     }
-
     private static void setStyleDialog(Dialog moreInfoDialog) {
         moreInfoDialog.setHeaderTitle("Other Information");
         moreInfoDialog.setWidth("600px");

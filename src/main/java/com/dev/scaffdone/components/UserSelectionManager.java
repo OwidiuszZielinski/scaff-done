@@ -22,7 +22,6 @@ public class UserSelectionManager extends VerticalLayout {
         TextField customUser = createTextField();
         ComboBox<String> lastUsers = createComboBoxUsers();
         Button setUser = createUserButton("SET USER");
-
         setUser.addClickListener(e -> {
             if (customUser.getValue().isBlank() && lastUsers.getValue() == null) {
                 Notification.show("User is required");
@@ -33,7 +32,7 @@ public class UserSelectionManager extends VerticalLayout {
             } else {
                 this.userName = customUser.getValue();
             }
-            System.out.println("My first field of calculation " + userName);
+            // TODO: 15.02.2024 Applikacja ma problem kiedy w bazie jest kalkulacja bez uzytkownika NPE
             Notification.show("User " + userName + " added!");
         });
         setUsers(lastUsers);

@@ -9,7 +9,6 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.AppShellConfigurator;
-import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import jakarta.annotation.security.PermitAll;
@@ -23,7 +22,6 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
     private final SecurityService securityService;
     private final ScaffoldingService service;
-
     private final ScaffoldGrid grid;
     private final CalculationManager calculationManager;
     private final UserSelectionManager userSelectionManager;
@@ -32,7 +30,6 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
 
     public HomeView(SecurityService securityService, ScaffoldingService service) {
-        
         this.securityService = securityService;
         this.service = service;
         grid = createGrid();
@@ -44,15 +41,11 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
         HeightManager heightManager = new HeightManager(calculationManager);
         additionalInfoManager = new AdditionalInfoManager();
         calculationManager.getSave().addClickListener(event -> saveScaffolding());
-
-
         HorizontalLayout layout = new HorizontalLayout(
                 userSelectionManager, modulesManager, lengthManager, heightManager);
 
         add(title, grid, layout,
                 new HorizontalLayout(additionalInfoManager, calculationManager));
-
-
     }
 
     private ScaffoldGrid createGrid() {
@@ -65,7 +58,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
     private CalculationManager createCalculationManager() {
         final CalculationManager calculationManager;
         calculationManager = new CalculationManager();
-        calculationManager.getStyle().set("margin-top","1px");
+        calculationManager.getStyle().set("margin-top", "1px");
         return calculationManager;
     }
 
@@ -82,8 +75,7 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
         grid.getGrid().setItems(service.getScaffolds());
     }
 
-
-    private  HorizontalLayout createHeader() {
+    private HorizontalLayout createHeader() {
         H1 header = createHeaderLayout();
         HorizontalLayout layout = new HorizontalLayout(header);
         layout.setSizeFull();
@@ -101,23 +93,19 @@ public class HomeView extends VerticalLayout implements AppShellConfigurator {
 
     private HorizontalLayout createLogoutLayout() {
         GreenButton logout = new GreenButton("LOGOUT");
-        logout.getStyle().set("margin-right","20px");
+        logout.getStyle().set("margin-right", "20px");
         HorizontalLayout buLay = new HorizontalLayout(logout);
         buLay.setSizeFull();
         buLay.setJustifyContentMode(JustifyContentMode.END);
-        logout.addClickListener(event->{
+        logout.addClickListener(event -> {
             securityService.logout();
         });
         return buLay;
     }
 
     private void initExampleData(ScaffoldGrid grid) {
-
         grid.getGrid().setItems(
                 service.getScaffolds()
         );
     }
-
-
-
 }

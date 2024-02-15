@@ -3,7 +3,7 @@ package com.dev.scaffdone.components;
 import com.dev.scaffdone.core.scaffolding.model.Colors;
 import com.vaadin.flow.component.button.Button;
 
-public class GreenButton extends Button{
+public class GreenButton extends Button {
 
     public GreenButton(String text) {
         super(text);

@@ -23,8 +23,7 @@ public class LengthManager extends VerticalLayout {
         CheckboxGroup<String> framesCheckBox = createFramesCheckBox();
         Button setLength = createButton();
         TextField customLength = createCustomLength();
-        HorizontalLayout layout = new HorizontalLayout(customLength,setLength);
-
+        HorizontalLayout layout = new HorizontalLayout(customLength, setLength);
         setLength.addClickListener(e -> {
             if (!customLength.isEmpty()) {
                 currentLength = Float.parseFloat(customLength.getValue());
@@ -90,7 +89,8 @@ public class LengthManager extends VerticalLayout {
         itemDescriptions.put("15", "Three frames length");
         return itemDescriptions.getOrDefault(item, "No description available");
     }
-    private float roundLength(){
+
+    private float roundLength() {
         return (float) (Math.round(currentLength * 100.0) / 100.0);
     }
 

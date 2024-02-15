@@ -17,44 +17,34 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import lombok.RequiredArgsConstructor;
 
 @Route("register")
 @PageTitle("Sign up")
 @AnonymousAllowed
+@RequiredArgsConstructor
 public class RegisterView extends Composite {
 
     private final SecurityService securityService;
     private final UserDetailsService userService;
 
-    public RegisterView(SecurityService securityService, UserDetailsService userService) {
-        this.securityService = securityService;
-        this.userService = userService;
-    }
-
     @Override
     protected Component initContent() {
-
         PasswordField confirmPassword = new PasswordField("Confirm Password");
         confirmPassword.setWidth("300px");
-
         PasswordField password = new PasswordField("Password");
         password.setWidth("300px");
-
         EmailField email = new EmailField("Email");
         email.setWidth("300px");
-
         TextField username = new TextField("Username");
         username.setWidth("300px");
-
         VerticalLayout layout = crateRegisterLayout(username, email, password, confirmPassword);
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
         layout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         return layout;
-
     }
 
     private VerticalLayout crateRegisterLayout(TextField username, EmailField email, PasswordField password, PasswordField confirmPassword) {
-
         Button button = new Button("Send", event -> register(
                 username.getValue(),
                 email.getValue(),
@@ -64,7 +54,6 @@ public class RegisterView extends Composite {
         button.setWidth("300px");
         button.getStyle().set("background-color", Colors.GREEN_COLOR.getHexCode());
         button.getStyle().set("color", "white");
-
         VerticalLayout layout = new VerticalLayout(
                 new H2("Sign up"),
                 username,
@@ -72,8 +61,7 @@ public class RegisterView extends Composite {
                 password,
                 confirmPassword,
                 button,
-        new RouterLink("Sign In", LoginView.class)
-
+                new RouterLink("Sign In", LoginView.class)
         );
         layout.setSizeFull();
         return layout;

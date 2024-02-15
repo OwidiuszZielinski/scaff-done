@@ -15,7 +15,6 @@ import java.math.RoundingMode;
 @Getter
 public class CalculationManager extends HorizontalLayout {
 
-
     private float scaffoldingLength;
     private float scaffoldingHeight;
     private Button save = new Button("SAVE CALCULATION");
@@ -24,17 +23,13 @@ public class CalculationManager extends HorizontalLayout {
     private TextArea squareMeters = new TextArea("Square meters");
 
     public CalculationManager() {
-
         setGreenButton(save);
         setFieldsReadOnly();
         setFieldsSize();
         setSpacing(false);
         justifyElements(save);
         save.addClickListener(event -> {
-
-
         });
-
         add(currentLength, currentHeight, squareMeters, save);
     }
 
@@ -44,9 +39,7 @@ public class CalculationManager extends HorizontalLayout {
         squareMeters.getStyle().set("margin-left", "40px");
         currentHeight.getStyle().set("margin-right", "20px");
         saveToDatabase.getStyle().set("margin-left", "22px");
-
     }
-
 
     public void setScaffoldingLength(float len) {
         this.scaffoldingLength = len;
@@ -66,8 +59,8 @@ public class CalculationManager extends HorizontalLayout {
 
     public float getSquareMeters(){
         return (float) (Math.round(this.scaffoldingLength * this.scaffoldingHeight * 100.0) / 100.0);
-
     }
+
     public void calculateResult() {
         float result = (float) (Math.round(this.scaffoldingLength * this.scaffoldingHeight * 100.0) / 100.0);
         this.squareMeters.setValue(result + " [ m2 ]");
@@ -81,9 +74,7 @@ public class CalculationManager extends HorizontalLayout {
         currentLength.setReadOnly(true);
         currentHeight.setReadOnly(true);
         squareMeters.setReadOnly(true);
-
     }
-
 
     private void setFieldsSize() {
         currentLength.setWidth("190px");
@@ -105,7 +96,4 @@ public class CalculationManager extends HorizontalLayout {
     public float getScaffoldingHeight() {
         return Math.round(scaffoldingHeight * Math.pow(10, 2)) / (float) Math.pow(10, 2);
     }
-
-
-
 }

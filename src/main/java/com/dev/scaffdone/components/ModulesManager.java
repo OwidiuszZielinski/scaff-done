@@ -34,13 +34,10 @@ public class ModulesManager extends VerticalLayout {
         VerticalLayout addCustomLayout = new VerticalLayout(customQuantity, addToList);
         HorizontalLayout dimensionLayout = new HorizontalLayout(dimensions, customDimension);
         HorizontalLayout quantityLayout = new HorizontalLayout(values, addCustomLayout);
-
         addToList.addClickListener(e -> {
-
             if (dimensions.getValue() == null && customDimension.isEmpty()) {
                 Notification.show("Dimension is required");
                 return;
-
             }
             if (values.getValue() == 0 && customQuantity.isEmpty()) {
                 Notification.show("Quantities is required");
@@ -58,7 +55,6 @@ public class ModulesManager extends VerticalLayout {
                     this.scaffoldingModules.add(new ScaffoldingModule(
                             Float.parseFloat(customDimension.getValue()),
                             Integer.parseInt(customQuantity.getValue())));
-
                 }
                 calculationManager.setScaffoldingLength(calculateTotalLengthFromModule());
                 Notification.show("Added!");

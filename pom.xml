@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.dev</groupId>
     <artifactId>scaff-done</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>scaff-done</name>
     <description>Helpful project at work.</description>
     <properties>
@@ -24,6 +24,11 @@
         </repository>
     </repositories>
     <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+        </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>javax.persistence-api</artifactId>
@@ -63,7 +68,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.30</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -85,15 +91,17 @@
             <artifactId>reactor-core</artifactId>
             <version>3.5.10</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
-            <version>1.0.2</version>
-        </dependency>
+
 
     </dependencies>
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>flow-server-production-mode</artifactId>
+            </dependency>
+
             <dependency>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-bom</artifactId>
@@ -109,18 +117,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
+
             </plugin>
         </plugins>
     </build>
-
     <profiles>
         <profile>
             <id>production</id>
@@ -140,6 +140,13 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <!-- To always force an optimized production bundle build set this configuration to 'true' -->
+                            <!-- To possibly use the pre-compiled production bundle remove or set to 'false' -->
+                            <forceProductionBuild>true</forceProductionBuild>
+                            <!-- To have reproducible build by running 'npm ci' -->
+                            <ciBuild>true</ciBuild>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

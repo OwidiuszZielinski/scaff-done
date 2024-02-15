@@ -14,12 +14,10 @@ import java.util.stream.IntStream;
 
 public class HeightManager extends VerticalLayout {
 
-
     public HeightManager(CalculationManager calculationManager) {
         RadioButtonGroup<Integer> heights = createHeightsRadioButton();
         TextField customHeight = new TextField("Custom Height");
         Button setHeightButton = createSetHeightButton();
-
         setHeightButton.addClickListener(event ->
         {
             if (heights.getValue() == null && customHeight.getValue().isBlank()) {
@@ -28,12 +26,10 @@ public class HeightManager extends VerticalLayout {
                 calculationManager.setScaffoldingHeight(Float.parseFloat(customHeight.getValue()));
                 calculationManager.calculateResult();
                 Notification.show("Height has been set!");
-
             } else {
                 Notification.show("Height has been set!");
                 calculationManager.setScaffoldingHeight(heights.getValue());
                 calculationManager.calculateResult();
-
             }
         });
         HorizontalLayout layout = createHorizontal(customHeight, setHeightButton);

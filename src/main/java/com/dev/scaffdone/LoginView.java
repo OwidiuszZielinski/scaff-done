@@ -20,9 +20,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         setJustifyContentMode(JustifyContentMode.CENTER);
         login.setAction("login");
         add(new H1("Scaffolding Done"), login,
-
-        new RouterLink("Register", RegisterView.class)
-
+                new RouterLink("Register", RegisterView.class)
         );
     }
 

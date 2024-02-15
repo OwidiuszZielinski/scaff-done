@@ -1,16 +1,14 @@
 package com.dev.scaffdone.core.scaffolding.model;
 
-
+import com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO;
 import com.dev.scaffdone.core.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 @Builder
@@ -37,7 +35,7 @@ public class Scaffolding {
     private User user;
     private String otherInformation;
 
-    public void fromDTO(com.dev.scaffdone.core.scaffolding.dto.ScaffoldingDTO scaffoldingDTO){
+    public void fromDTO(ScaffoldingDTO scaffoldingDTO) {
         this.date = LocalDateTime.parse(scaffoldingDTO.getDate());
         this.modules = scaffoldingDTO.getModules();
         this.done = scaffoldingDTO.isDone();
@@ -47,7 +45,6 @@ public class Scaffolding {
         this.resultSquareMeters = scaffoldingDTO.getResultSquareMeters();
         this.user = scaffoldingDTO.getUser();
         this.otherInformation = scaffoldingDTO.getOtherInformation();
-
     }
 
     public String getDate() {

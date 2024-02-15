@@ -14,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Route("")
 public class DefaultRedirectView extends VerticalLayout implements BeforeEnterObserver {
 
-
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
