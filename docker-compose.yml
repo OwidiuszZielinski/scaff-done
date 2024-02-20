@@ -1,7 +1,6 @@
 services:
   app:
-    build: .
-    image: 05101995oz/scaff-done:1.0.5
+    image: 05101995oz/scaff-done:latest
     ports:
       - "8081:8080"
     depends_on:
